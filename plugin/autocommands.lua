@@ -24,6 +24,7 @@ local smart_close_filetypes = {
   'tsplayground',
   'qf',
   'lspinfo',
+  'Trouble',
 }
 
 local smart_close_buftypes = {}
