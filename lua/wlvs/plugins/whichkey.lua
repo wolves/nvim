@@ -89,7 +89,12 @@ return function()
       p = {
         name = 'Packer',
         p = { '<cmd>PackerSync<cr>', "Packer Sync" },
+        c = { '<cmd>PackerClean<CR>', "Packer Clean" },
       },
+    },
+    t = {
+      name = "Testing",
+      t = {"<cmd>GoTest<CR>", "GoTest"},
     },
     x = {
       name = "+errors",
