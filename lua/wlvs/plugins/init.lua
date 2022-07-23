@@ -417,6 +417,8 @@ packer.startup({
       config = conf 'go',
     }
 
+    use { 'ray-x/guihua.lua' }
+
     use({ "npxbr/glow.nvim", cmd = "Glow" })
 
     use 'plasticboy/vim-markdown'

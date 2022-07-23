@@ -37,7 +37,7 @@ return function()
     lsp_diag_virtual_text = true,
     lsp_on_attach = wlvs.lsp.on_attach,
     --   lsp_codelens = false, -- set to false to disable codelens, true by default
-    --   lsp_diag_hdlr = true, -- hook lsp diag handler
+      -- lsp_diag_hdlr = true, -- hook lsp diag handler
     --   lsp_document_formatting = false,
     --   -- set to true: use gopls to format
     --   -- false if you want to use other formatter tool(e.g. efm, nulls)
@@ -49,8 +49,10 @@ return function()
     --   dap_debug_vt = true, -- set to true to enable dap virtual text
     --   build_tags = "", -- set default build tags
     textobjects = false,
+    test_runner = "richgo",
     --   test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
     --   run_in_floaterm = false -- set to true to run in float window.
+    run_in_floaterm = true,
     --   -- float term recommand if you use richgo/ginkgo with terminal color
   })
 
@@ -60,6 +62,11 @@ return function()
       pattern = { '*.go' },
       command = 'silent! lua require("go.format").goimport()',
     },
+    -- {
+    --   event = 'FileType',
+    --   pattern = { 'GoTest' },
+    --   command = 'nnoremap <buffer><silent> q :Bdelete!<CR>'
+    -- }
   })
 
   -- go_nvim.setup {
