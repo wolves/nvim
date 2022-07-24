@@ -236,8 +236,6 @@ wlvs.lsp.servers = {
               'it',
               'before_each',
               'after_each',
-              'pending',
-              'teardown',
               'packer_plugins',
             },
           },
