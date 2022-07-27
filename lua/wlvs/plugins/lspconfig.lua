@@ -209,6 +209,7 @@ wlvs.lsp.servers = {
   'bashls',
   'cssls',
   'jsonls',
+  'svelte',
   'tsserver',
   'vimls',
   'yamlls',
