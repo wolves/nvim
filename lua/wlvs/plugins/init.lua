@@ -165,16 +165,7 @@ packer.startup({
     -- }
 
     use 'b0o/schemastore.nvim'
-    use({
-      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      config = function()
-        require("lsp_lines").setup({
-          vim.diagnostic.config({
-            virtual_text = false,
-          })
-        })
-      end,
-    })
+
     -- use {
     --   'jose-elias-alvarez/null-ls.nvim',
     --   requires = { 'nvim-lua/plenary.nvim' },
