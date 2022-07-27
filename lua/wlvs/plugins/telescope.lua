@@ -23,6 +23,8 @@ return function()
 
   telescope.setup {
     defaults = {
+      prompt_prefix = " ❯ ",
+      selection_caret = "❯ ",
       set_env = { ['TERM'] = vim.env.TERM },
       borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
       -- BUG: remove prefix as it is currently broken
@@ -30,8 +32,6 @@ return function()
       -- @see: https://github.com/nvim-telescope/telescope.nvim/issues/1251
       -- prompt_prefix = '', -- 
       -- selection_caret = '» ',
-      prompt_prefix = " ❯ ",
-      selection_caret = "❯ ",
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
@@ -177,7 +177,9 @@ return function()
     ['<C-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
       name = '+telescope',
+      c = { builtins.commands, 'Commands' },
       f = { builtins.find_files, 'find files' },
+      h = { builtins.help_tags, 'help tags' },
       o = { builtins.buffers, 'buffers' },
       s = { grep_prompt, "Grep string"},
       w = { grep_word, "Grep word"},
