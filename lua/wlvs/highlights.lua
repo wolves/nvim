@@ -25,7 +25,7 @@ local M = {}
 ---```
 ---@param group_name string A highlight group name
 local function get_hl(group_name)
-  local attrs = { foreground = 'guifg', background = 'guibg' }
+  local attrs = { foreground = 'fg', background = 'bg' }
   local hl = api.nvim_get_hl_by_name(group_name, true)
   local result = {}
   if hl then
