@@ -66,7 +66,7 @@ return function()
   local mappings = {
     ["w"] = { "<cmd>w!<cr>", "Save" },
     ["q"] = { "<cmd>q!<cr>", "Quit" },
-    ["/"] = { '<cmd>lua require("Comment.api").toggle_current_linewise()<CR>', "Comment" },
+    ["/"] = { '<cmd>lua require("Comment.api").toggle.linewise.current()<CR>', "Comment" },
     b = {
       name = "Buffers",
       b = {
