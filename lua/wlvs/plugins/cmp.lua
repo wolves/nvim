@@ -1,8 +1,13 @@
 return function()
-  local api = vim.api
-  local t = wlvs.replace_termcodes
   local cmp = require 'cmp'
+
+  local fn = vim.fn
+  local api = vim.api
   local fmt = string.format
+  local t = wlvs.replace_termcodes
+
+  local border = wlvs.style.current.border
+  local lsp_hls = wlvs.style.lsp.kind_highlights
 
   local function feed(key, mode)
     api.nvim_feedkeys(t(key), mode or '', true)
@@ -42,9 +47,21 @@ return function()
     end
   end
 
+  local cmp_window = {
+    borer = border,
+    winhighlight = table.concat({
+      'Normal:NormalFloat',
+      'FloatBorder:FloatBorder',
+      'CursorLine:Visual',
+      'Search:None',
+    }, ','),
+  }
+
   cmp.setup {
-    experimental = {
-      ghost_text = false, -- disable whilst using copilot
+    preselect = cmp.PreselectMode.None,
+    window = {
+      completion = cmp.config.window.bordered(cmp_window),
+      documentation = cmp.config.window.bordered(cmp_window),
     },
     snippet = {
       expand = function(args)
@@ -64,13 +81,11 @@ return function()
     },
     formatting = {
       deprecated = true,
-      fields = { 'kind', 'abbr', 'menu' },
+      fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
-        vim_item.kind = wlvs.style.lsp.kinds[vim_item.kind]
-        local name = entry.source.name
-        local completion = entry.completion_item.data
-        -- FIXME: automate this using a regex to normalise names
-        local menu = ({
+        vim_item.kind = fmt('%s %s', wlvs.style.lsp.kinds[vim_item.kind], vim_item.kind)
+        -- vim_item.kind = fmt('%s %s', wlvs.style.lsp.codicons[vim_item.kind], vim_item.kind)
+        vim_item.menu = ({
           nvim_lsp = '[LSP]',
           -- nvim_lua = '[Lua]',
           -- emoji = '[Emoji]',
@@ -79,20 +94,22 @@ return function()
           -- neorg = '[Neorg]',
           -- orgmode = '[Org]',
           -- cmp_tabnine = '[TN]',
-          luasnip = '[Luasnip]',
-          buffer = '[Buffer]',
+          luasnip = '[SN]',
+          buffer = '[B]',
           -- spell = '[Spell]',
-          -- cmdline = '[Command]',
-          -- cmp_git = '[Git]',
-        })[name]
+          cmdline = '[Cmd]',
+          git = '[Git]',
+        })[entry.source.name]
 
-        vim_item.menu = menu
+        vim_item.dup = ({
+          luasnip = 0,
+          -- nvim_lsp = 0,
+          path = 0,
+          buffer = 0,
+          cmdline = 0,
+        })[entry.source.name] or 0
         return vim_item
       end,
-    },
-    window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
@@ -109,11 +126,16 @@ return function()
   }
 
   cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
+      { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
+      { name = 'cmdline_history' },
+      { name = 'path' },
+    }),
+    -- mapping = cmp.mapping.preset.cmdline(),
+    -- sources = cmp.config.sources({
+    --   { name = 'path' }
+    -- }, {
+    --   { name = 'cmdline' }
+    -- })
   })
 end

@@ -213,6 +213,7 @@ packer.startup({
       'hrsh7th/nvim-cmp',
       module = 'cmp',
       event = 'InsertEnter',
+      config = conf 'cmp',
       requires = {
         { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-lspconfig' },
         { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
@@ -224,7 +225,6 @@ packer.startup({
         -- { 'petertriho/cmp-git', after = 'nvim-cmp' },
         -- { 'tzachar/cmp-tabnine', run = './install.sh', after = 'nvim-cmp' },
       },
-      config = conf 'cmp',
     }
 
 
@@ -266,7 +266,7 @@ packer.startup({
 
     -- Icons
     use 'kyazdani42/nvim-web-devicons'
-
+    use 'mortepau/codicons.nvim'
     use {
       'akinsho/bufferline.nvim',
       config = conf 'bufferline',
