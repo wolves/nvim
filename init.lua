@@ -30,6 +30,7 @@ end
 -- Config
 ------------------------------------------------------------------------------//
 R 'wlvs.globals'
+R 'wlvs.styles'
 R 'wlvs.settings'
 R 'wlvs.highlights'
 -- R 'wlvs.statusline'
