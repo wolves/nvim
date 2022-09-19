@@ -210,6 +210,7 @@ wlvs.lsp.servers = {
   'cssls',
   'jsonls',
   'svelte',
+  'tailwindcss',
   'tsserver',
   'vimls',
   'yamlls',
