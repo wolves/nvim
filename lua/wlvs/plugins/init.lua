@@ -426,6 +426,11 @@ packer.startup({
 
     use { 'ray-x/guihua.lua' }
 
+    use {
+      'simrat39/rust-tools.nvim',
+      config = conf 'rust',
+    }
+
     use({ "npxbr/glow.nvim", cmd = "Glow" })
 
     use 'plasticboy/vim-markdown'
