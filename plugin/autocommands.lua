@@ -55,6 +55,14 @@ wlvs.augroup('SmartClose', {
   },
 })
 
+wlvs.augroup('Golang', {
+  {
+    event = {'BufWritePre'},
+    pattern = {'*.go'},
+    command = "silent! lua require('go.format').goimport()"
+  }
+})
+
 wlvs.augroup('CheckOutsideTime', {
   {
     -- automatically check for changed files outside vim
@@ -131,12 +139,12 @@ wlvs.augroup('Utilities', {
     pattern = { 'gitcommit', 'gitrebase' },
     command = 'set bufhidden=delete',
   },
-{
+  {
     event = { 'BufWritePre', 'FileWritePre' },
     pattern = { '*' },
     command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
   },
-{
+  {
     event = { 'BufLeave' },
     pattern = { '*' },
     command = function()
