@@ -79,13 +79,13 @@ local function setup_mappings(client)
     return { buffer = 0, desc = desc }
   end
 
-  if client.server_capabilities.documentFormattingProvider then
-    wlvs.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
-  end
+  -- if client.server_capabilities.documentFormattingProvider then
+  --   wlvs.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
+  -- end
 
   if client.server_capabilities.codeActionProvider then
     wlvs.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
-    wlvs.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
+    -- wlvs.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
   end
 
   if client.server_capabilities.definitionProvider then
@@ -184,7 +184,7 @@ end
 --   config.on_attach = wlvs.lsp.on_attach
 --   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
 --   if nvim_lsp_ok then
---     cmp_nvim_lsp.update_capabilities(config.capabilities)
+--     cmp_nvim_lsp.default_capabilities(config.capabilities)
 --   end
 --   return config
 -- end
@@ -198,7 +198,7 @@ function wlvs.lsp.get_server_config(config)
   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
   local nvim_lsp_ok, cmp_nvim_lsp = wlvs.safe_require('cmp_nvim_lsp')
   if nvim_lsp_ok then
-    cmp_nvim_lsp.update_capabilities(config.capabilities)
+    cmp_nvim_lsp.default_capabilities(config.capabilities)
   end
   return config
 end
@@ -214,7 +214,7 @@ wlvs.lsp.servers = {
   'tsserver',
   'vimls',
   'yamlls',
-  gopls = false,
+  -- gopls = false,
   -- gopls = { analyses = { unusedparams = false }, staticcheck = true },
   -- jsonls = function()
   --   return {
