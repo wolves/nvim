@@ -389,20 +389,20 @@ packer.startup({
     ------------------------------------------------------------------------------//
     -- Profiling & Startup {{{1
     ------------------------------------------------------------------------------//
-    use {
-      'nathom/filetype.nvim',
-      config = function()
-        require('filetype').setup {
-          overrides = {
-            literal = {
-              ['kitty.conf'] = 'kitty',
-              ['.gitignore'] = 'conf',
-              ['.env'] = 'sh',
-            },
-          },
-        }
-      end,
-    }
+    -- use {
+    --   'nathom/filetype.nvim',
+    --   config = function()
+    --     require('filetype').setup {
+    --       overrides = {
+    --         literal = {
+    --           ['kitty.conf'] = 'kitty',
+    --           ['.gitignore'] = 'conf',
+    --           ['.env'] = 'sh',
+    --         },
+    --       },
+    --     }
+    --   end,
+    -- }
 
     use 'lewis6991/impatient.nvim'
     use {
