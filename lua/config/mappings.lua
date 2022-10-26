@@ -10,6 +10,10 @@ wk.setup({
   triggers = "auto",
   plugins = { spelling = true },
   key_labels = { ["<leader>"] = "SPC" },
+  triggers_blacklist = {
+    i = { "j", "k" },
+    v = { "j", "k" },
+  },
 })
 
 -- Move to window using the <ctrl> movement keys
@@ -33,5 +37,77 @@ vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv")
 vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi")
 
 -- Switch buffers with tab
-vim.keymap.set("n", "<C-Left>", "<cmd>bprevious<cr>")
-vim.keymap.set("n", "<C-Right>", "<cmd>bnext<cr>")
+vim.keymap.set("n", "<C-Left>", "<cmd>bprevious<CR>")
+vim.keymap.set("n", "<C-Right>", "<cmd>bnext<CR>")
+vim.keymap.set("n", "<S-h>", "<cmd>bprevious<CR>")
+vim.keymap.set("n", "<S-l>", "<cmd>bnext<CR>")
+
+-- Move to splits
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+-- Tree
+vim.keymap.set("n", "<C-n>", "<cmd>Neotree toggle reveal<CR>")
+
+-- Search
+local function search(backward)
+  vim.cmd([[echo "1> "]])
+  local first = vim.fn.getcharstr()
+  vim.fn.search(first, "s" .. (backward and "b" or ""))
+  vim.schedule(function()
+    vim.cmd([[echo "2> "]])
+    local second = vim.fn.getcharstr()
+    vim.fn.search(first .. second, "c" .. (backward and "b" or ""))
+
+    vim.fn.setreg("/", first .. second)
+  end)
+end
+
+vim.keymap.set("n", "s", search)
+vim.keymap.set("n", "S", function()
+  search(true)
+end)
+
+-- Clear search with <esc>
+vim.keymap.set("", "<esc>", ":noh<esc>")
+vim.keymap.set("n", "gw", "*N")
+vim.keymap.set("x", "gw", "*N")
+
+local leader = {
+  w = { "<cmd>w!<CR>", "Save" },
+  q = { "<cmd>q!<CR>", "Quit" },
+  b = {
+    name = "+buffer",
+    b = {
+      "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+      "Buffers",
+    },
+    d = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+    q = { "<cmd>Bwipeout!<CR>", "Wipeout Buffer" },
+  },
+  g = {
+    name = "+git",
+    g = { "<cmd>Neogit<CR>", "Neogit" },
+    h = { name = "+hunk" },
+  },
+  ["h"] = {
+    name = "+help",
+    p = {
+      name = "+packer",
+      p = { "<cmd>PackerSync<cr>", "Sync" },
+      s = { "<cmd>PackerStatus<cr>", "Status" },
+      i = { "<cmd>PackerInstall<cr>", "Install" },
+      c = { "<cmd>PackerCompile<cr>", "Compile" },
+    },
+  },
+}
+
+for i = 0, 10 do
+  leader[tostring(i)] = "which_key_ignore"
+end
+
+wk.register(leader, { prefix = "<leader>" })
+
+wk.register({ g = { name = "+goto" } })
