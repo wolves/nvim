@@ -72,6 +72,9 @@ local function plugins(use, plugin)
     end,
   })
 
+  -- Language Support
+  plugin("simrat39/rust-tools.nvim")
+
   -- Theme: Colors
   plugin("rebelot/kanagawa.nvim")
 

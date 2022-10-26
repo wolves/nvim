@@ -34,17 +34,17 @@ function M.config()
     },
     marksman = {},
     -- pyright = {},
-    -- rust_analyzer = {
-    --   settings = {
-    --     ["rust-analyzer"] = {
-    --       cargo = { allFeatures = true },
-    --       checkOnSave = {
-    --         command = "clippy",
-    --         extraArgs = { "--no-deps" },
-    --       },
-    --     },
-    --   },
-    -- },
+    rust_analyzer = {
+      settings = {
+        ["rust-analyzer"] = {
+          cargo = { allFeatures = true },
+          checkOnSave = {
+            command = "clippy",
+            extraArgs = { "--no-deps" },
+          },
+        },
+      },
+    },
     yamlls = {},
     sumneko_lua = {
       cmd = { "/home/wlvs/code/lua-language-server/bin/lua-language-server" },
