@@ -4,10 +4,10 @@ local function clock()
   return " " .. os.date("%H:%M")
 end
 
-local function holidays()
-  return "🌴🌊"
-  -- return "🎅🎄🌟🎁"
-end
+-- local function holidays()
+--   return "🌴🌊"
+--   -- return "🎅🎄🌟🎁"
+-- end
 
 function M.config()
   require("lualine").setup({
@@ -63,7 +63,7 @@ function M.config()
         --   return require("messages.view").status
         -- end,
         { require("github-notifications").statusline_notification_count },
-        { holidays },
+        -- { holidays },
       },
       lualine_y = { "location" },
       lualine_z = { clock },
