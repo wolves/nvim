@@ -97,6 +97,9 @@ function M.config()
       colors = rainbow_clrs,
       disable = { "lua", "json", "html" },
     },
+    matchup = {
+      enable = true,
+    },
     context_commentstring = { enable = true, enable_autocmd = false },
     incremental_selection = {
       enable = false,
