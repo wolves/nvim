@@ -87,19 +87,75 @@ local leader = {
     d = { "<cmd>Bdelete!<CR>", "Close Buffer" },
     q = { "<cmd>Bwipeout!<CR>", "Wipeout Buffer" },
   },
+  f = {
+    name = "+file",
+    n = { "<cmd>enew<CR>", "New" },
+    r = { "<cmd>Telescope oldfiles<CR>", "Open Recent File" },
+    t = { "<cmd>Neotree toggle<CR>", "Neotree" },
+  },
   g = {
     name = "+git",
     g = { "<cmd>Neogit<CR>", "Neogit" },
+    b = { "<cmd>Telescope git_branches<CR>", "Branches" },
+    c = { "<cmd>Telescope git_commits<CR>", "Commits" },
+    d = { "<cmd>DiffviewOpen<CR>", "Diffview" },
+    s = { "<cmd>Telescope git_status<CR>", "Status" },
     h = { name = "+hunk" },
   },
   ["h"] = {
     name = "+help",
+    a = { "<cmd>:Telescope autocommands<CR>", "Auto Commands" },
+    c = { "<cmd>:Telescope commands<CR>", "Commands" },
+    h = { "<cmd>:Telescope help_tags<CR>", "Help Pages" },
+    k = { "<cmd>:Telescope keymaps<CR>", "Key Maps" },
+    m = { "<cmd>:Telescope man_pages<CR>", "Man Pages" },
+    o = { "<cmd>Telescope vim_options<CR>", "Options" },
     p = {
       name = "+packer",
       p = { "<cmd>PackerSync<cr>", "Sync" },
       s = { "<cmd>PackerStatus<cr>", "Status" },
       i = { "<cmd>PackerInstall<cr>", "Install" },
       c = { "<cmd>PackerCompile<cr>", "Compile" },
+    },
+  },
+  s = {
+    name = "+search",
+    b = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Buffer" },
+    g = { "<cmd>Telescope live_grep<CR>", "Grep" },
+    h = { "<cmd>Telescope command_history<CR>", "Command History" },
+    s = {
+      require("plugins.telescope").grep_string_prompt,
+      "Grep Prompt",
+    },
+    w = {
+      require("plugins.telescope").grep_word,
+      "Current Word",
+    },
+  },
+  t = {
+    name = "+toggle",
+    f = {
+      require("plugins.lsp.formatting").toggle,
+      "Format on Save",
+    },
+    n = {
+      function()
+        util.toggle("relativenumber", true)
+        util.toggle("number")
+      end,
+      "Line Numbers",
+    },
+    s = {
+      function()
+        util.toggle("spell")
+      end,
+      "Spelling",
+    },
+    w = {
+      function()
+        util.toggle("wrap")
+      end,
+      "Word Wrap",
     },
   },
 }
