@@ -127,21 +127,12 @@ local leader = {
     b = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Buffer" },
     g = { "<cmd>Telescope live_grep<CR>", "Grep" },
     h = { "<cmd>Telescope command_history<CR>", "Command History" },
-    s = {
-      require("plugins.telescope").grep_string_prompt,
-      "Grep Prompt",
-    },
-    w = {
-      require("plugins.telescope").grep_word,
-      "Current Word",
-    },
+    s = { require("plugins.telescope").grep_string_prompt, "Grep Prompt" },
+    w = { require("plugins.telescope").grep_word, "Current Word" },
   },
   t = {
     name = "+toggle",
-    f = {
-      require("plugins.lsp.formatting").toggle,
-      "Format on Save",
-    },
+    f = { require("plugins.lsp.formatting").toggle, "Format on Save" },
     n = {
       function()
         util.toggle("relativenumber", true)
