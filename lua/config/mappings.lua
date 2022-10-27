@@ -118,6 +118,10 @@ local leader = {
       c = { "<cmd>PackerCompile<cr>", "Compile" },
     },
   },
+  o = {
+    name = "+open",
+    n = { require("github-notifications.menu").notifications, "Github Notifications" },
+  },
   s = {
     name = "+search",
     b = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Buffer" },
@@ -157,6 +161,13 @@ local leader = {
       end,
       "Word Wrap",
     },
+  },
+  x = {
+    name = "+errors",
+    t = { "<cmd>TodoTrouble<CR>", "Todo Trouble" },
+    tt = { "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<CR>", "Todo Trouble" },
+    T = { "<cmd>TodoTelescope<CR>", "Todo Telescope" },
+    x = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Trouble" },
   },
 }
 
