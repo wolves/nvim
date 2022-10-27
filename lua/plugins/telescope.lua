@@ -116,13 +116,13 @@ function M.init()
     require("plugins.telescope").project_files()
   end, { desc = "Find File" })
 
-  vim.keymap.set("n", "<leader>fs", function()
-    require("plugins.telescope").grep_string_prompt()
-  end, { desc = "Grep String" })
-
-  vim.keymap.set("n", "<leader>fw", function()
-    require("plugins.telescope").grep_word()
-  end, { desc = "Grep Word" })
+  -- vim.keymap.set("n", "<leader>fs", function()
+  --   require("plugins.telescope").grep_string_prompt()
+  -- end, { desc = "Grep String" })
+  --
+  -- vim.keymap.set("n", "<leader>fw", function()
+  --   require("plugins.telescope").grep_word()
+  -- end, { desc = "Grep Word" })
 end
 
 return M
