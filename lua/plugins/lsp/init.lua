@@ -92,6 +92,7 @@ function M.config()
         },
       },
     },
+    svelte = {},
     -- teal_ls = {},
     vimls = {},
     -- tailwindcss = {},
