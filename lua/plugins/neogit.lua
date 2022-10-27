@@ -4,6 +4,7 @@ local M = {
 
 function M.config()
   require("neogit").setup({
+    disable_commit_confirmation = true,
     kind = "split",
     signs = {
       -- { CLOSED, OPENED }
