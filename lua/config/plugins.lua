@@ -107,6 +107,7 @@ local function plugins(use, plugin)
   plugin("NvChad/nvim-colorizer.lua")
   plugin("folke/todo-comments.nvim")
   plugin("nvim-lualine/lualine.nvim")
+  plugin("b0o/incline.nvim")
 
   -- Text Editing
   plugin("numToStr/Comment.nvim")
@@ -132,10 +133,20 @@ local function plugins(use, plugin)
     -- end,
   })
 
+  use({
+    "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
+    module = "inc_rename",
+    config = function()
+      require("inc_rename").setup()
+    end,
+  })
+
   -- Git
   plugin("lewis6991/gitsigns.nvim")
   plugin("TimUntersberger/neogit")
   use({ "rlch/github-notifications.nvim", module = "github-notifications" })
+  plugin("sindrets/diffview.nvim")
 
   -- Profile/Startup
   use({
