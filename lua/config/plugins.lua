@@ -75,6 +75,7 @@ local function plugins(use, plugin)
   -- Language Support
   plugin("simrat39/rust-tools.nvim")
   plugin("ray-x/go.nvim")
+  use("ray-x/guihua.lua")
 
   -- Theme: Colors
   plugin("rebelot/kanagawa.nvim")
