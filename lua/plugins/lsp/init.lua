@@ -20,6 +20,7 @@ function M.config()
     dockerls = {},
     tsserver = {},
     -- eslint = {},
+    -- gopls = {},
     html = {},
     jsonls = {
       settings = {
