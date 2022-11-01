@@ -48,7 +48,7 @@ function M.config()
     },
     yamlls = {},
     sumneko_lua = {
-      cmd = { "/home/wlvs/code/lua-language-server/bin/lua-language-server" },
+      cmd = { vim.fn.stdpath("data") .. "/mason/bin/lua-language-server" },
       single_file_support = true,
       settings = {
         Lua = {
