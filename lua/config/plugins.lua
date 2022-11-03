@@ -130,10 +130,9 @@ local function plugins(use, plugin)
 
   -- Text Editing
   plugin("numToStr/Comment.nvim")
-
   plugin("windwp/nvim-autopairs")
-
   plugin("L3MON4D3/LuaSnip")
+  plugin("abecodes/tabout.nvim")
 
   use({
     "kylechui/nvim-surround",
