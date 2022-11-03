@@ -75,7 +75,7 @@ local function plugins(use, plugin)
   -- Language Support
   plugin("simrat39/rust-tools.nvim")
   plugin("ray-x/go.nvim")
-  use("ray-x/guihua.lua")
+  use({ "ray-x/guihua.lua" })
 
   -- Theme: Colors
   plugin("rebelot/kanagawa.nvim")
@@ -97,6 +97,23 @@ local function plugins(use, plugin)
     opt = false,
   })
   plugin("nvim-neo-tree/neo-tree.nvim")
+  use({
+    "s1n7ax/nvim-window-picker",
+    opt = false,
+    config = function()
+      require("window-picker").setup({
+        autoselect_one = true,
+        include_current = false,
+        filter_rules = {
+          bo = {
+            filetype = { "neo-tree-popup", "quickfix", "incline" },
+            buftype = { "terminal", "quickfix", "nofile" },
+          },
+        },
+        -- other_win_hl_color = require('wlvs.highlights').get_hl('Visual', 'bg'),
+      })
+    end,
+  })
   use({
     "MunifTanjim/nui.nvim",
     module = "nui",
