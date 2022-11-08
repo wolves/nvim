@@ -175,6 +175,23 @@ local function plugins(use, plugin)
       -- vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
     end,
   })
+
+  -- Writing
+  use({ "folke/twilight.nvim", module = "twilight" })
+  use({
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    config = function()
+      require("zen-mode").setup({
+        -- plugins = { gitsigns = true, tmux = true, kitty = { enabled = false, font = "+2" } },
+        plugins = {
+          twilight = { enabled = true },
+          gitsigns = { enabled = true },
+          tmux = { enabled = false },
+        },
+      })
+    end,
+  })
 end
 
 return packer.setup(config, plugins)
