@@ -192,6 +192,9 @@ local function plugins(use, plugin)
       })
     end,
   })
+
+  -- Org
+  plugin("nvim-neorg/neorg")
 end
 
 return packer.setup(config, plugins)
