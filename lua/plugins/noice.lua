@@ -6,7 +6,7 @@ local M = {
 
 function M.config()
   require("noice").setup({
-    debug = true,
+    debug = false,
     cmdline = {
       format = {
         IncRename = {
