@@ -127,6 +127,13 @@ local function plugins(use, plugin)
   plugin("folke/todo-comments.nvim")
   plugin("nvim-lualine/lualine.nvim")
   plugin("b0o/incline.nvim")
+  use({
+    "andymass/vim-matchup",
+    event = "BufReadPost",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    end,
+  })
 
   -- Text Editing
   plugin("numToStr/Comment.nvim")
