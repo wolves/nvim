@@ -170,7 +170,7 @@ local function plugins(use, plugin)
   -- Git
   plugin("lewis6991/gitsigns.nvim")
   plugin("TimUntersberger/neogit")
-  use({ "rlch/github-notifications.nvim", module = "github-notifications" })
+  -- use({ "rlch/github-notifications.nvim", module = "github-notifications" })
   plugin("sindrets/diffview.nvim")
 
   -- Profile/Startup

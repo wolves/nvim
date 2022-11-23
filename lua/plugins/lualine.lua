@@ -62,7 +62,7 @@ function M.config()
         -- function()
         --   return require("messages.view").status
         -- end,
-        { require("github-notifications").statusline_notification_count },
+        -- { require("github-notifications").statusline_notification_count },
         -- { holidays },
       },
       lualine_y = { "location" },

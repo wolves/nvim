@@ -96,7 +96,7 @@ function M.config()
     svelte = {},
     -- teal_ls = {},
     vimls = {},
-    -- tailwindcss = {},
+    tailwindcss = {},
   }
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()

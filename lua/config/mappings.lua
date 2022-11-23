@@ -118,10 +118,10 @@ local leader = {
       c = { "<cmd>PackerCompile<cr>", "Compile" },
     },
   },
-  o = {
-    name = "+open",
-    n = { require("github-notifications.menu").notifications, "Github Notifications" },
-  },
+  -- o = {
+  --   name = "+open",
+  --   n = { require("github-notifications.menu").notifications, "Github Notifications" },
+  -- },
   s = {
     name = "+search",
     b = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Buffer" },
