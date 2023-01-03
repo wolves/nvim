@@ -1,3 +1,5 @@
+--require("lazyvim.config.options")
+
 local indent = 2
 
 local notify = {
@@ -33,8 +35,7 @@ if vim.fn.has("nvim-0.9.0") == 1 then
   vim.opt.splitkeep = "screen"
 end
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+--vim.g.maplocalleader = " "
 
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
@@ -99,31 +100,31 @@ vim.opt.fillchars = {
 }
 
 -- don't load the plugins below
-local builtins = {
-  "gzip",
-  "zip",
-  "zipPlugin",
-  "fzf",
-  "tar",
-  "tarPlugin",
-  "getscript",
-  "getscriptPlugin",
-  "vimball",
-  "vimballPlugin",
-  "2html_plugin",
-  "matchit",
-  -- "matchparen",
-  "logiPat",
-  "rrhelper",
-  "netrw",
-  "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
-}
+--local builtins = {
+--  "gzip",
+--  "zip",
+--  "zipPlugin",
+--  "fzf",
+--  "tar",
+--  "tarPlugin",
+--  "getscript",
+--  "getscriptPlugin",
+--  "vimball",
+--  "vimballPlugin",
+--  "2html_plugin",
+--  "matchit",
+--  -- "matchparen",
+--  "logiPat",
+--  "rrhelper",
+--  "netrw",
+--  "netrwPlugin",
+--  "netrwSettings",
+--  "netrwFileHandlers",
+--}
 
-for _, plugin in ipairs(builtins) do
-  vim.g["loaded_" .. plugin] = 1
-end
+--for _, plugin in ipairs(builtins) do
+--  vim.g["loaded_" .. plugin] = 1
+--end
 
 -- Use proper syntax highlighting in code blocks
 local fences = {

@@ -1,20 +1,42 @@
----@diagnostic disable: missing-parameter
+--require("lazyvim.config.keymaps")
 
 local wk = require("which-key")
 local util = require("util")
 
 vim.o.timeoutlen = 300
 
-wk.setup({
-  show_help = false,
-  triggers = "auto",
-  plugins = { spelling = true },
-  key_labels = { ["<leader>"] = "SPC" },
-  triggers_blacklist = {
-    i = { "j", "k" },
-    v = { "j", "k" },
-  },
-})
+local id
+for _, key in ipairs({ "h", "j", "k", "l" }) do
+  local count = 0
+  vim.keymap.set("n", key, function()
+    if count >= 10 then
+      id = vim.notify("Hold it Cowboy!", vim.log.levels.WARN, {
+        icon = "🤠",
+        replace = id,
+        keep = function()
+          return count >= 10
+        end,
+      })
+    else
+      count = count + 1
+      vim.defer_fn(function()
+        count = count - 1
+      end, 5000)
+      return key
+    end
+  end, { expr = true })
+end
+
+--wk.setup({
+--  show_help = false,
+--  triggers = "auto",
+--  plugins = { spelling = true },
+--  key_labels = { ["<leader>"] = "SPC" },
+--  triggers_blacklist = {
+--    i = { "j", "k" },
+--    v = { "j", "k" },
+--  },
+--})
 
 -- Move to window using the <ctrl> movement keys
 vim.keymap.set("n", "<left>", "<C-w>h")
@@ -127,12 +149,12 @@ local leader = {
     b = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Buffer" },
     g = { "<cmd>Telescope live_grep<CR>", "Grep" },
     h = { "<cmd>Telescope command_history<CR>", "Command History" },
-    s = { require("plugins.telescope").grep_string_prompt, "Grep Prompt" },
+    --s = { require("plugins.telescope").grep_string_prompt, "Grep Prompt" },
     w = { require("plugins.telescope").grep_word, "Current Word" },
   },
   t = {
     name = "+toggle",
-    f = { require("plugins.lsp.formatting").toggle, "Format on Save" },
+    --f = { require("plugins.lsp.formatting").toggle, "Format on Save" },
     n = {
       function()
         util.toggle("relativenumber", true)

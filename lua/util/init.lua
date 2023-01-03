@@ -1,47 +1,21 @@
 -- selene: allow(global_usage)
-_G.dump = function(...)
-  vim.pretty_print(...)
-end
-
-_G.dumpp = function(...)
-  local msg = vim.inspect(...)
-  vim.notify(msg, vim.log.levels.INFO, {
-    title = "Debug",
-    on_open = function(win)
-      vim.api.nvim_win_set_option(win, "conceallevel", 3)
-      local buf = vim.api.nvim_win_get_buf(win)
-      vim.api.nvim_buf_set_option(buf, "filetype", "lua")
-      vim.api.nvim_win_set_option(win, "spell", false)
-    end,
-  })
-end
-
--- selene: allow(global_usage)
-_G.profile = function(cmd, times)
+_G.profile = function(cmd, times, flush)
   times = times or 100
-  local args = {}
-  if type(cmd) == "string" then
-    args = { cmd }
-    cmd = vim.cmd
-  end
   local start = vim.loop.hrtime()
   for _ = 1, times, 1 do
-    local ok = pcall(cmd, unpack(args))
-    if not ok then
-      error("Command failed: " .. tostring(ok) .. " " .. vim.inspect({ cmd = cmd, args = args }))
+    if flush then
+      jit.flush(cmd, true)
     end
+    cmd()
   end
   print(((vim.loop.hrtime() - start) / 1000000 / times) .. "ms")
 end
 
 local M = {}
 
-function M.packer_defered()
-  vim.cmd([[do User PackerDefered]])
-end
-
 function M.require(mod)
-  return M.try(require, mod)
+  local ok, ret = M.try(require, mod)
+  return ok and ret
 end
 
 function M.try(fn, ...)
@@ -57,6 +31,20 @@ function M.try(fn, ...)
     M.error(table.concat(lines, "\n"))
     return err
   end)
+end
+
+function M.markdown(msg, opts)
+  opts = vim.tbl_deep_extend("force", {
+    title = "Debug",
+    on_open = function(win)
+      vim.wo[win].conceallevel = 3
+      vim.wo[win].concealcursor = ""
+      vim.wo[win].spell = false
+      local buf = vim.api.nvim_win_get_buf(win)
+      vim.treesitter.start(buf, "markdown")
+    end,
+  }, opts or {})
+  require("notify").notify(msg, vim.log.levels.INFO, opts)
 end
 
 function M.debug_pcall()
@@ -92,7 +80,7 @@ end
 
 function M.toggle(option, silent)
   local info = vim.api.nvim_get_option_info(option)
-  local scopes = { buf = "bo", win = "wo", global = "o" }
+  local scopes = { buf = "bo", win = "wo", global = "go" }
   local scope = scopes[info.scope]
   local options = vim[scope]
   options[option] = not options[option]
@@ -103,64 +91,6 @@ function M.toggle(option, silent)
       M.warn("disabled vim." .. scope .. "." .. option, "Toggle")
     end
   end
-end
-
----@param fn fun(buf: buffer, win: window)
-function M.float(fn, opts)
-  local buf = vim.api.nvim_create_buf(false, true)
-  local vpad = 4
-  local hpad = 10
-
-  opts = vim.tbl_deep_extend("force", {
-    relative = "editor",
-    width = vim.o.columns - hpad * 2,
-    height = vim.o.lines - vpad * 2,
-    row = vpad,
-    col = hpad,
-    style = "minimal",
-    border = "rounded",
-  }, opts or {})
-  local win = vim.api.nvim_open_win(buf, true, opts)
-
-  local function close()
-    if vim.api.nvim_buf_is_valid(buf) then
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
-    if vim.api.nvim_win_is_valid(win) then
-      vim.api.nvim_win_close(win, true)
-    end
-    vim.cmd([[checktime]])
-  end
-
-  vim.keymap.set("n", "<ESC>", close, { buffer = buf, nowait = true })
-  vim.keymap.set("n", "q", close, { buffer = buf, nowait = true })
-  vim.api.nvim_create_autocmd({ "BufDelete", "BufLeave", "BufHidden" }, {
-    once = true,
-    buffer = buf,
-    callback = close,
-  })
-  fn(buf, win)
-end
-
-function M.float_cmd(cmd, opts)
-  M.float(function(buf)
-    local output = vim.api.nvim_exec(cmd, true)
-    local lines = vim.split(output, "\n")
-    vim.api.nvim_buf_set_lines(buf, 0, -1, true, lines)
-  end, opts)
-end
-
-function M.float_terminal(cmd, opts)
-  M.float(function(buf, win)
-    vim.fn.termopen(cmd)
-    local autocmd = {
-      "autocmd! TermClose <buffer> lua vim.cmd[[checktime]];",
-      string.format("vim.api.nvim_win_close(%d, {force = true});", win),
-      string.format("vim.api.nvim_buf_delete(%d, {force = true});", buf),
-    }
-    vim.cmd(table.concat(autocmd, " "))
-    vim.cmd([[startinsert]])
-  end, opts)
 end
 
 function M.exists(fname)
@@ -197,7 +127,6 @@ function M.clipman()
         }, function(choice)
           if choice then
             vim.api.nvim_paste(choice, true, 1)
-            -- vim.fn.setreg("+", choice)
           end
         end)
       else
@@ -233,6 +162,47 @@ function M.throttle(ms, fn)
       running = true
     end
   end
+end
+
+---@return string
+function M.get_root()
+  local path = vim.api.nvim_buf_get_name(0)
+  path = path ~= "" and vim.loop.fs_realpath(path) or nil
+  ---@type string[]
+  local roots = {}
+  if path then
+    for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+      local workspace = client.config.workspace_folders
+      local paths = workspace and vim.tbl_map(function(ws)
+        return vim.uri_to_fname(ws.uri)
+      end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
+      for _, p in ipairs(paths) do
+        local r = vim.loop.fs_realpath(p)
+        if path:find(r, 1, true) then
+          roots[#roots + 1] = r
+        end
+      end
+    end
+  end
+  table.sort(roots, function(a, b)
+    return #a > #b
+  end)
+  ---@type string?
+  local root = roots[1]
+  if not root then
+    path = path and vim.fs.dirname(path) or vim.loop.cwd()
+    ---@type string?
+    root = vim.fs.find({ ".git", "/lua" }, { path = path, upward = true })[1]
+    root = root and vim.fs.dirname(root) or vim.loop.cwd()
+  end
+  ---@cast root string
+  return root
+end
+
+function M.test(is_file)
+  local file = is_file and vim.fn.expand("%:p") or "./tests"
+  local init = vim.fn.glob("tests/*init*")
+  require("plenary.test_harness").test_directory(file, { minimal_init = init })
 end
 
 function M.version()
