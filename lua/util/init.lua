@@ -216,6 +216,12 @@ function M.version()
   end
 end
 
+function M.telescope(builtin, opts)
+  return function()
+    require("telescope.builtin")[builtin](vim.tbl_deep_extend("force", { cwd = M.get_root() }, opts or {}))
+  end
+end
+
 ---@param on_attach fun(client, buffer)
 function M.on_attach(on_attach)
   vim.api.nvim_create_autocmd("LspAttach", {

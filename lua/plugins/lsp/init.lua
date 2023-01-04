@@ -77,6 +77,8 @@ return {
     end,
   },
 
+  "jose-elias-alvarez/typescript.nvim",
+
   -- cmdline tools and lsp servers
   {
 

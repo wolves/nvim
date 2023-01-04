@@ -1,17 +1,19 @@
+local util = require("util")
+
 return {
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = "Neotree",
-    --keys = {
-    --  {
-    --    "<leader>ft",
-    --    function()
-    --      require("neo-tree.command").execute({ toggle = true, dir = require("lazyvim.util").get_root() })
-    --    end,
-    --    desc = "NeoTree",
-    --  },
-    --},
+    keys = {
+      {
+        "<leader>ft",
+        function()
+          require("neo-tree.command").execute({ toggle = true, dir = require("util").get_root() })
+        end,
+        desc = "NeoTree",
+      },
+    },
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
     end,
@@ -25,6 +27,82 @@ return {
           hide_gitignored = true,
           never_show = {
             ".DS_Store",
+          },
+        },
+      },
+    },
+  },
+
+  -- search/replace in multiple files
+
+  -- fuzzy finder
+  {
+    "nvim-telescope/telescope.nvim",
+    cmd = "Telescope",
+    keys = {
+      { "<leader>/", util.telescope("live_grep"), desc = "Find in Files (Grep)" },
+      { "<leader><space>", util.telescope("find_files"), desc = "Find Files" },
+      { "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
+      { "<leader>ff", util.telescope("find_files"), desc = "Find Files" },
+      { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent" },
+      { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "Branches" },
+      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
+      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Status" },
+      { "<leader>ha", "<cmd>Telescope autocommands<CR>", desc = "Auto Commands" },
+      { "<leader>hc", "<cmd>Telescope commands<CR>", desc = "Commands" },
+      { "<leader>hf", "<cmd>Telescope filetypes<CR>", desc = "File Types" },
+      { "<leader>hh", "<cmd>Telescope help_tags<CR>", desc = "Help Pages" },
+      { "<leader>hk", "<cmd>Telescope keymaps<CR>", desc = "Key Maps" },
+      { "<leader>hm", "<cmd>Telescope man_pages<CR>", desc = "Man Pages" },
+      { "<leader>ho", "<cmd>Telescope vim_options<CR>", desc = "Options" },
+      { "<leader>hs", "<cmd>Telescope highlights<CR>", desc = "Search Highlight Groups" },
+      { "<leader>ht", "<cmd>Telescope builtin<CR>", desc = "Telescope" },
+      { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", desc = "Buffer" },
+      { "<leader>sc", "<cmd>Telescope command_history<CR>", desc = "Command History" },
+      { "<leader>sg", util.telescope("live_grep"), desc = "Grep" },
+      { "<leader>sm", "<cmd>Telescope marks<CR>", desc = "Jump to Mark" },
+      { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
+      { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      {
+        "<leader>ss",
+        util.telescope("lsp_document_symbols", {
+          symbols = {
+            "Class",
+            "Function",
+            "Method",
+            "Constructor",
+            "Interface",
+            "Module",
+            "Struct",
+            "Trait",
+            "Field",
+            "Property",
+          },
+        }),
+        desc = "Goto Symbol",
+      },
+    },
+    config = {
+      defaults = {
+        prompt_prefix = " ",
+        selection_caret = " ",
+        mappings = {
+          i = {
+            ["<c-t>"] = function(...)
+              return require("trouble.providers.telescope").open_with_trouble(...)
+            end,
+            ["<C-i>"] = function()
+              util.telescope("find_files", { no_ignore = true })()
+            end,
+            ["<C-h>"] = function()
+              util.telescope("find_files", { hidden = true })()
+            end,
+            ["<C-Down>"] = function(...)
+              return require("telescope.actions").cycle_history_next(...)
+            end,
+            ["<C-Up>"] = function(...)
+              return require("telescope.actions").cycle_history_prev(...)
+            end,
           },
         },
       },
