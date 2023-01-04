@@ -66,12 +66,13 @@ return {
       { "<leader>ht", "<cmd>Telescope builtin<CR>", desc = "Telescope" },
       { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", desc = "Buffer" },
       { "<leader>sc", "<cmd>Telescope command_history<CR>", desc = "Command History" },
-      { "<leader>sg", util.telescope("live_grep"), desc = "Grep" },
+      { "<leader>sg", util.telescope("live_grep"), desc = "Grep (root dir)" },
+      { "<leader>sG", util.telescope("live_grep"), { cwd = false }, desc = "Grep (cwd)" },
       { "<leader>sm", "<cmd>Telescope marks<CR>", desc = "Jump to Mark" },
       { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       {
-        "<leader>ss",
+        "<leader>sy",
         util.telescope("lsp_document_symbols", {
           symbols = {
             "Class",
