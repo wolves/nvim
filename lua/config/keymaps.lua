@@ -106,8 +106,6 @@ local leader = {
       "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
       "Buffers",
     },
-    --d = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-    --q = { "<cmd>Bwipeout!<CR>", "Wipeout Buffer" },
   },
   f = {
     name = "+file",
@@ -132,18 +130,7 @@ local leader = {
     k = { "<cmd>:Telescope keymaps<CR>", "Key Maps" },
     m = { "<cmd>:Telescope man_pages<CR>", "Man Pages" },
     o = { "<cmd>Telescope vim_options<CR>", "Options" },
-    p = {
-      name = "+packer",
-      p = { "<cmd>PackerSync<cr>", "Sync" },
-      s = { "<cmd>PackerStatus<cr>", "Status" },
-      i = { "<cmd>PackerInstall<cr>", "Install" },
-      c = { "<cmd>PackerCompile<cr>", "Compile" },
-    },
   },
-  -- o = {
-  --   name = "+open",
-  --   n = { require("github-notifications.menu").notifications, "Github Notifications" },
-  -- },
   s = {
     name = "+search",
     b = { "<cmd>Telescope current_buffer_fuzzy_find<CR>", "Buffer" },
@@ -174,13 +161,6 @@ local leader = {
       end,
       "Word Wrap",
     },
-  },
-  x = {
-    name = "+errors",
-    t = { "<cmd>TodoTrouble<CR>", "Todo Trouble" },
-    tt = { "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<CR>", "Todo Trouble" },
-    T = { "<cmd>TodoTelescope<CR>", "Todo Telescope" },
-    x = { "<cmd>TroubleToggle workspace_diagnostics<CR>", "Trouble" },
   },
 }
 

@@ -31,6 +31,51 @@ return {
     },
   },
 
+  -- which-key
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = function()
+      local wk = require("which-key")
+      wk.setup({
+        show_help = false,
+        plugins = { spelling = true },
+        key_labels = { ["<leader>"] = "SPC" },
+      })
+      wk.register({
+        mode = { "n", "v" },
+        ["g"] = { name = "+goto" },
+        ["]"] = { name = "+next" },
+        ["["] = { name = "+prev" },
+        ["<leader>b"] = { name = "+buffer" },
+        ["<leader>c"] = { name = "+code" },
+        ["<leader>f"] = { name = "+file" },
+        ["<leader>g"] = { name = "+git" },
+        ["<leader>h"] = { name = "+help" },
+        ["<leader>n"] = { name = "+noice" },
+        ["<leader>q"] = { name = "+quit/session" },
+        ["<leader>s"] = { name = "+search" },
+        ["<leader>x"] = { name = "+diagnostics/quickfix" },
+      })
+    end,
+  },
+
+  -- git signs
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPre",
+    config = {
+      signs = {
+        add = { text = "▎" },
+        change = { text = "▎" },
+        delete = { text = "契" },
+        topdelete = { text = "契" },
+        changedelete = { text = "▎" },
+        untracked = { text = "▎" },
+      },
+    },
+  },
+
   -- buffer remove
   {
     "echasnovski/mini.bufremove",
@@ -49,6 +94,35 @@ return {
         end,
         desc = "Delete Buffer (Force)",
       },
+    },
+  },
+
+  -- better diagnostics list etc
+  {
+    "folke/trouble.nvim",
+    cmd = { "TroubleToggle", "Trouble" },
+    config = {
+      auto_open = false,
+      use_diagnostic_signs = true, -- en
+    },
+    keys = {
+      { "<leader>xx", "<cmd>TroubleToggle workspace_diagnostics<CR>", desc = "Trouble" },
+    },
+  },
+
+  -- todo comments
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = "BufReadPost",
+    config = true,
+    -- stylua: ignore
+    keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+      { "<leader>xt", "<cmd>TodoTrouble<cr>", "Todo Trouble" },
+      { "<leader>xtt", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo Trouble" },
+      { "<leader>xT", "<cmd>TodoTelescope<cr>", desc = "Todo Telescope" },
     },
   },
 }
