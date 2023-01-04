@@ -106,8 +106,8 @@ local leader = {
       "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
       "Buffers",
     },
-    d = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-    q = { "<cmd>Bwipeout!<CR>", "Wipeout Buffer" },
+    --d = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+    --q = { "<cmd>Bwipeout!<CR>", "Wipeout Buffer" },
   },
   f = {
     name = "+file",
