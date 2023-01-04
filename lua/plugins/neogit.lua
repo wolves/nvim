@@ -3,7 +3,13 @@ return {
   cmd = "Neogit",
   config = {
     disable_commit_confirmation = true,
-    kind = "split",
+    kind = "tab",
+    commit_popup = {
+      kind = "split",
+    },
+    popup = {
+      kind = "split",
+    },
     signs = {
       -- { CLOSED, OPENED }
       section = { "", "" },
@@ -13,6 +19,6 @@ return {
     integrations = { diffview = true },
   },
   keys = {
-    { "<leader>gg", "<cmd>Neogit kind=floating<CR>", desc = "Neogit" },
+    { "<leader>gg", "<cmd>Neogit<CR>", desc = "Neogit" },
   },
 }
