@@ -3,7 +3,7 @@ return {
   cmd = "Neogit",
   config = {
     disable_commit_confirmation = true,
-    kind = "tab",
+    kind = "split",
     commit_popup = {
       kind = "split",
     },
