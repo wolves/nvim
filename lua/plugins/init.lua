@@ -1,18 +1,7 @@
 return {
-  "b0o/SchemaStore.nvim",
   "jose-elias-alvarez/typescript.nvim",
-  "williamboman/mason-lspconfig.nvim",
   "nvim-lua/plenary.nvim",
   "folke/which-key.nvim",
-
-  -- LSP
-  {
-    "SmiteshP/nvim-navic",
-    config = function()
-      vim.g.navic_silence = true
-      require("nvim-navic").setup({ separator = " ", highlight = true, depth_limit = 5 })
-    end,
-  },
 
   {
     "dstein64/vim-startuptime",
