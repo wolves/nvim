@@ -87,12 +87,12 @@ return {
     end,
   },
 
-  -- auto pairs
+  -- pair jumping
   {
-    "echasnovski/mini.pairs",
-    event = "VeryLazy",
+    "andymass/vim-matchup",
+    event = "BufReadPost",
     config = function()
-      require("mini.pairs").setup({})
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
     end,
   },
 
