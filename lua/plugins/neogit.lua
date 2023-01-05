@@ -3,12 +3,12 @@ return {
   cmd = "Neogit",
   config = {
     disable_commit_confirmation = true,
-    kind = "split",
+    kind = "floating",
     commit_popup = {
-      kind = "split",
+      kind = "floating",
     },
     popup = {
-      kind = "split",
+      kind = "floating",
     },
     signs = {
       -- { CLOSED, OPENED }
