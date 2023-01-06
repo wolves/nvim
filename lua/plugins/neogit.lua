@@ -1,7 +1,7 @@
 return {
   "TimUntersberger/neogit",
   cmd = "Neogit",
-  config = {
+  opts = {
     disable_commit_confirmation = true,
     kind = "floating",
     commit_popup = {

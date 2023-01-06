@@ -11,7 +11,7 @@ return {
         desc = "Clear all Notifications",
       },
     },
-    config = {
+    opts = {
       timeout = 3000,
       max_height = function()
         return math.floor(vim.o.lines * 0.75)
@@ -43,7 +43,7 @@ return {
   {
     "akinsho/nvim-bufferline.lua",
     event = "BufAdd",
-    config = {
+    opts = {
       options = {
         --diagnostics = "nvim_lsp",
         always_show_bufferline = false,
@@ -69,7 +69,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    config = {
+    opts = {
       options = {
         globalstatus = true,
         disabled_filetypes = { statusline = { "lazy" } },
@@ -81,7 +81,7 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPre",
-    config = {
+    opts = {
       -- char = "▏",
       char = "│",
       filetype_exclude = { "help", "dashboard", "neo-tree", "Trouble", "lazy", "neogitstatus" },
@@ -113,7 +113,7 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
-    config = {
+    opts = {
       lsp = {
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,

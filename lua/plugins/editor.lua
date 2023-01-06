@@ -17,7 +17,7 @@ return {
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
     end,
-    config = {
+    opts = {
       filesystem = {
         follow_current_file = true,
         hijack_netrw_behavior = "open_current",
@@ -90,7 +90,7 @@ return {
         desc = "Goto Symbol",
       },
     },
-    config = {
+    opts = {
       defaults = {
         prompt_prefix = " ",
         selection_caret = " ",
@@ -160,7 +160,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPre",
-    config = {
+    opts = {
       signs = {
         add = { text = "▎" },
         change = { text = "▎" },
@@ -211,7 +211,7 @@ return {
   {
     "folke/trouble.nvim",
     cmd = { "TroubleToggle", "Trouble" },
-    config = {
+    opts = {
       auto_open = false,
       use_diagnostic_signs = true, -- en
     },
