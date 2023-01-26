@@ -62,6 +62,7 @@ return {
           nls.builtins.formatting.fish_indent,
           nls.builtins.formatting.shfmt,
           nls.builtins.formatting.markdownlint,
+          nls.builtins.formatting.prettier,
           nls.builtins.formatting.prettierd.with({
             filetypes = { "markdown" }, -- only runs `deno fmt` for markdown
           }),
@@ -86,6 +87,7 @@ return {
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
     ensure_installed = {
+      "prettier",
       "prettierd",
       "stylua",
       "selene",
