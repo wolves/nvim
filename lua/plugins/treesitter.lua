@@ -25,8 +25,8 @@ return {
 
     config = function()
       require("nvim-treesitter.configs").setup({
-        sync_install = false,
         ensure_installed = {
+          "astro",
           "bash",
           "diff",
           "fish",
@@ -114,5 +114,5 @@ return {
         },
       })
     end,
-  }
+  },
 }
