@@ -120,10 +120,4 @@ return {
     end,
     config = { separator = " ", highlight = true, depth_limit = 5 },
   },
-
-  -- rust language tools
-  {
-    "simrat39/rust-tools.nvim",
-    config = true,
-  },
 }
