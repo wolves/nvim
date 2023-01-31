@@ -156,6 +156,71 @@ return {
     end,
   },
 
+  -- better-escape (jk == esc)
+  {
+    "max397574/better-escape.nvim",
+    event = "BufReadPost",
+    config = function()
+      local esc = require("better_escape")
+
+      esc.setup({
+        mapping = { "jk", "jj" }, -- a table with mappings to use
+        timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+        clear_empty_lines = false, -- clear line after escaping if there is only whitespace
+        keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
+      })
+    end,
+  },
+
+  -- neoscroll
+  {
+    "karb94/neoscroll.nvim",
+    event = "BufReadPost",
+    keys = { "<C-u>", "<C-d>", "gg", "G" },
+    config = function()
+      require("neoscroll").setup({})
+      local map = {}
+
+      map["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "80" } }
+      map["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "80" } }
+      map["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "250" } }
+      map["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "250" } }
+      map["<C-y>"] = { "scroll", { "-0.10", "false", "80" } }
+      map["<C-e>"] = { "scroll", { "0.10", "false", "80" } }
+      map["zt"] = { "zt", { "150" } }
+      map["zz"] = { "zz", { "150" } }
+      map["zb"] = { "zb", { "150" } }
+
+      require("neoscroll.config").set_mappings(map)
+    end,
+  },
+
+  -- toggleterm (better terminal)
+  {
+    "akinsho/nvim-toggleterm.lua",
+    event = "UIEnter",
+    keys = "<C-\\>",
+    config = function()
+      require("toggleterm").setup({
+        size = 20,
+        hide_numbers = true,
+        open_mapping = [[<C-\>]],
+        shade_filetypes = {},
+        shade_terminals = true,
+        shading_factor = 0.3, -- Bak has 2
+        start_in_insert = true,
+        persist_size = true,
+        direction = "horizontal",
+      })
+
+      -- Hide number column for
+      -- vim.cmd [[au TermOpen * setlocal nonumber norelativenumber]]
+
+      -- Esc twice to get to normal mode
+      vim.cmd([[tnoremap <esc><esc> <C-\><C-N>]])
+    end,
+  },
+
   -- neogit
   {
     "TimUntersberger/neogit",
@@ -227,7 +292,20 @@ return {
     "RRethy/vim-illuminate",
     event = "BufReadPost",
     config = function()
-      require("illuminate").configure({ delay = 200 })
+      require("illuminate").configure({
+        delay = 200,
+        filetypes_denylist = {
+          "alpha",
+          "dashboard",
+          "DoomInfo",
+          "fugitive",
+          "help",
+          "norg",
+          "NvimTree",
+          "Outline",
+          "toggleterm",
+        },
+      })
     end,
     -- stylua: ignore
     keys = {
