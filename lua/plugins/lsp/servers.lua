@@ -27,17 +27,17 @@ local servers = {
   gopls = {},
   marksman = {},
   pyright = {},
-  rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        cargo = { allFeatures = true },
-        checkOnSave = {
-          command = "clippy",
-          extraArgs = { "--no-deps" },
-        },
-      },
-    },
-  },
+  -- rust_analyzer = {
+  --   settings = {
+  --     ["rust-analyzer"] = {
+  --       cargo = { allFeatures = true },
+  --       checkOnSave = {
+  --         command = "clippy",
+  --         extraArgs = { "--no-deps" },
+  --       },
+  --     },
+  --   },
+  -- },
   yamlls = {},
   sumneko_lua = {
     cmd = { vim.fn.stdpath("data") .. "/mason/bin/lua-language-server" },
