@@ -10,11 +10,12 @@ return {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
       { "folke/neodev.nvim", config = true },
       "mason.nvim",
-      { "williamboman/mason-lspconfig.nvim", config = { automatic_installation = true } },
+      "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
     },
     ---@type lspconfig.options
     servers = nil,
+    opts = {},
     config = function(plugin)
       -- setup formatting and keymaps
       require("util").on_attach(function(client, buffer)
@@ -37,12 +38,14 @@ return {
       -- lspconfig
       local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-      ---@type lspconfig.options
+      local ensure_installed = {} ---@type string[]
       local servers = plugin.servers or require("plugins.lsp.servers")
       for server, opts in pairs(servers) do
         opts.capabilities = capabilities
         require("lspconfig")[server].setup(opts)
       end
+
+      require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
     end,
   },
 
@@ -85,22 +88,24 @@ return {
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-    ensure_installed = {
-      "prettier",
-      "prettierd",
-      "stylua",
-      "selene",
-      "luacheck",
-      "eslint_d",
-      "shellcheck",
-      "deno",
-      "shfmt",
-      "flake8",
+    opts = {
+      ensure_installed = {
+        "prettier",
+        "prettierd",
+        "stylua",
+        "selene",
+        "luacheck",
+        "eslint_d",
+        "shellcheck",
+        "deno",
+        "shfmt",
+        "flake8",
+      },
     },
-    config = function(plugin)
-      require("mason").setup()
+    config = function(plugin, opts)
+      require("mason").setup(opts)
       local mr = require("mason-registry")
-      for _, tool in ipairs(plugin.ensure_installed) do
+      for _, tool in ipairs(opts.ensure_installed) do
         local p = mr.get_package(tool)
         if not p:is_installed() then
           p:install()
@@ -118,6 +123,12 @@ return {
         require("nvim-navic").attach(client, buffer)
       end)
     end,
-    config = { separator = " ", highlight = true, depth_limit = 5 },
+    opts = function()
+      return {
+        separator = " ",
+        highlight = true,
+        depth_limit = 5,
+      }
+    end,
   },
 }
