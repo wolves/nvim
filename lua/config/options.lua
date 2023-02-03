@@ -42,11 +42,13 @@ vim.g.loaded_perl_provider = 0
 vim.g.ruby_host_prog = "/home/wlvs/.asdf/shims/ruby"
 
 -- Set neovim npm location when using pnpm global via asdf-vm
-if vim.fn.has("macunix") then
-  vim.g.node_host_prog = "$HOME/Library/pnpm/global/5/node_modules/neovim/bin/cli.js"
-else
-  vim.g.node_host_prog = "$HOME/.local/share/pnpm/global/5/node_modules/neovim/bin/cli.js"
-end
+-- if vim.fn.has("mac") then
+--   vim.notify("Setting up for Mac", vim.log.levels.WARN, { title = "Neovim: Mac Setup" })
+--   vim.g.node_host_prog = "$HOME/Library/pnpm/global/5/node_modules/neovim/bin/cli.js"
+-- else
+--   vim.notify("Setting up for Linux", vim.log.levels.WARN, { title = "Neovim: Linux Setup" })
+--   vim.g.node_host_prog = "$HOME/.local/share/pnpm/global/5/node_modules/neovim/bin/cli.js"
+-- end
 
 vim.opt.autowrite = true
 vim.opt.clipboard = "unnamedplus"
