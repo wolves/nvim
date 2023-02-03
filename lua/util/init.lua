@@ -1,17 +1,43 @@
 -- selene: allow(global_usage)
-_G.profile = function(cmd, times, flush)
-  times = times or 100
-  local start = vim.loop.hrtime()
-  for _ = 1, times, 1 do
-    if flush then
-      jit.flush(cmd, true)
-    end
-    cmd()
-  end
-  print(((vim.loop.hrtime() - start) / 1000000 / times) .. "ms")
-end
+-- _G.profile = function(cmd, times, flush)
+--   times = times or 100
+--   local start = vim.loop.hrtime()
+--   for _ = 1, times, 1 do
+--     if flush then
+--       jit.flush(cmd, true)
+--     end
+--     cmd()
+--   end
+--   print(((vim.loop.hrtime() - start) / 1000000 / times) .. "ms")
+-- end
 
 local M = {}
+
+---@param on_attach fun(client, buffer)
+function M.on_attach(on_attach)
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+      local buffer = args.buf
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      on_attach(client, buffer)
+    end,
+  })
+end
+
+---@param plugin string
+function M.has(plugin)
+  return require("lazy.core.config").plugins[plugin] ~= nil
+end
+
+---@param name string
+function M.opts(name)
+  local plugin = require("lazy.core.config").plugins[name]
+  if not plugin then
+    return {}
+  end
+  local Plugin = require("lazy.core.plugin")
+  return Plugin.values(plugin, "opts", false)
+end
 
 function M.require(mod)
   local ok, ret = M.try(require, mod)
@@ -220,17 +246,6 @@ function M.telescope(builtin, opts)
   return function()
     require("telescope.builtin")[builtin](vim.tbl_deep_extend("force", { cwd = M.get_root() }, opts or {}))
   end
-end
-
----@param on_attach fun(client, buffer)
-function M.on_attach(on_attach)
-  vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-      local buffer = args.buf
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      on_attach(client, buffer)
-    end,
-  })
 end
 
 return M

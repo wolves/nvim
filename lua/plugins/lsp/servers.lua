@@ -5,6 +5,7 @@ local servers = {
   bashls = {},
   clangd = {},
   cssls = {},
+  denols = false,
   -- tailwindcss = {},
   tsserver = {},
   svelte = {},
