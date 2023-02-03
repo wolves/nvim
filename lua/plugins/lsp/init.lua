@@ -153,7 +153,7 @@ return {
         "luacheck",
         "eslint_d",
         "shellcheck",
-        "deno",
+        -- "deno",
         "shfmt",
         "flake8",
       },
