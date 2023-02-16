@@ -40,7 +40,7 @@ local servers = {
   --   },
   -- },
   yamlls = {},
-  sumneko_lua = {
+  lua_lsp = {
     cmd = { vim.fn.stdpath("data") .. "/mason/bin/lua-language-server" },
     single_file_support = true,
     settings = {
