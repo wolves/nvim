@@ -40,7 +40,7 @@ local servers = {
   --   },
   -- },
   yamlls = {},
-  lua_lsp = {
+  lua_ls = {
     cmd = { vim.fn.stdpath("data") .. "/mason/bin/lua-language-server" },
     single_file_support = true,
     settings = {
