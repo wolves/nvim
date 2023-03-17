@@ -25,7 +25,7 @@ local config = function()
       light = "lotus",
     },
   })
-  vim.cmd.colorscheme("kanagawa")
+  vim.cmd("colorscheme kanagawa-wave")
 end
 
 return {
@@ -33,5 +33,4 @@ return {
   lazy = false,
   priority = 1000,
   config = config,
-  build = "KanagawaCompile",
 }
