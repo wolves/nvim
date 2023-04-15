@@ -32,7 +32,7 @@ return {
           "fish",
           "gitignore",
           "go",
-          "help",
+          "vimdoc",
           "html",
           "http",
           "javascript",
