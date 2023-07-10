@@ -1,10 +1,22 @@
+local Util = require("util")
 local M = {}
 
 M.autoformat = true
 
 function M.toggle()
-  M.autoformat = not M.autoformat
-  vim.notify(M.autoformat and "Enabled format on save" or "Disabled format on save")
+  -- M.autoformat = not M.autoformat
+  -- vim.notify(M.autoformat and "Enabled format on save" or "Disabled format on save")
+  if vim.b.autoformat == false then
+    vim.b.autoformat = nil
+    M.opts.autoformat = true
+  else
+    M.opts.autoformat = not M.opts.autoformat
+  end
+  if M.opts.autoformat then
+    Util.info("Enabled format on save", { title = "Format" })
+  else
+    Util.warn("Disabled format on save", { title = "Format" })
+  end
 end
 
 function M.format()
