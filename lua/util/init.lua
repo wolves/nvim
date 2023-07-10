@@ -92,32 +92,110 @@ function M.t(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-function M.warn(msg, name)
-  vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
+function M.notify(msg, opts)
+  if vim.in_fast_event() then
+    return vim.schedule(function()
+      M.notify(msg, opts)
+    end)
+  end
+
+  opts = opts or {}
+  if type(msg) == "table" then
+    msg = table.concat(
+      vim.tbl_filter(function(line)
+        return line or false
+      end, msg),
+      "\n"
+    )
+  end
+  local lang = opts.lang or "markdown"
+  vim.notify(msg, opts.level or vim.log.levels.INFO, {
+    on_open = function(win)
+      pcall(require, "nvim-treesitter")
+      vim.wo[win].conceallevel = 3
+      vim.wo[win].concealcursor = ""
+      vim.wo[win].spell = false
+      local buf = vim.api.nvim_win_get_buf(win)
+      if not pcall(vim.treesitter.start, buf, lang) then
+        vim.bo[buf].filetype = lang
+        vim.bo[buf].syntax = lang
+      end
+    end,
+    title = opts.title or "lazy.nvim",
+  })
 end
 
-function M.error(msg, name)
-  vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
+---@param msg string|string[]
+---@param opts? LazyNotifyOpts
+function M.error(msg, opts)
+  opts = opts or {}
+  opts.level = vim.log.levels.ERROR
+  M.notify(msg, opts)
 end
 
-function M.info(msg, name)
-  vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
+---@param msg string|string[]
+---@param opts? LazyNotifyOpts
+function M.info(msg, opts)
+  opts = opts or {}
+  opts.level = vim.log.levels.INFO
+  M.notify(msg, opts)
 end
 
-function M.toggle(option, silent)
-  local info = vim.api.nvim_get_option_info(option)
-  local scopes = { buf = "bo", win = "wo", global = "go" }
-  local scope = scopes[info.scope]
-  local options = vim[scope]
-  options[option] = not options[option]
-  if silent ~= true then
-    if options[option] then
-      M.info("enabled vim." .. scope .. "." .. option, "Toggle")
+---@param msg string|string[]
+---@param opts? LazyNotifyOpts
+function M.warn(msg, opts)
+  opts = opts or {}
+  opts.level = vim.log.levels.WARN
+  M.notify(msg, opts)
+end
+
+---@param silent boolean?
+---@param values? {[1]:any, [2]:any}
+function M.toggle(option, silent, values)
+  if values then
+    if vim.opt_local[option]:get() == values[1] then
+      vim.opt_local[option] = values[2]
     else
-      M.warn("disabled vim." .. scope .. "." .. option, "Toggle")
+      vim.opt_local[option] = values[1]
+    end
+    return M.info("Set " .. option .. " to " .. vim.opt_local[option]:get(), { title = "Option" })
+  end
+  vim.opt_local[option] = not vim.opt_local[option]:get()
+  if not silent then
+    if vim.opt_local[option]:get() then
+      M.info("Enabled " .. option, { title = "Option" })
+    else
+      M.warn("Disabled " .. option, { title = "Option" })
     end
   end
 end
+
+-- function M.warn(msg, name)
+--   vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
+-- end
+--
+-- function M.error(msg, name)
+--   vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
+-- end
+--
+-- function M.info(msg, name)
+--   vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
+-- end
+
+-- function M.toggle(option, silent)
+--   local info = vim.api.nvim_get_option_info(option)
+--   local scopes = { buf = "bo", win = "wo", global = "go" }
+--   local scope = scopes[info.scope]
+--   local options = vim[scope]
+--   options[option] = not options[option]
+--   if silent ~= true then
+--     if options[option] then
+--       M.info("enabled vim." .. scope .. "." .. option, "Toggle")
+--     else
+--       M.warn("disabled vim." .. scope .. "." .. option, "Toggle")
+--     end
+--   end
+-- end
 
 function M.exists(fname)
   local stat = vim.loop.fs_stat(fname)
