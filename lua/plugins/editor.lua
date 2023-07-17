@@ -228,7 +228,7 @@ return {
     opts = {
       disable_commit_confirmation = true,
       kind = "floating",
-      commit_popup = {
+      commit_editor = {
         kind = "floating",
       },
       popup = {
