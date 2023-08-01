@@ -36,9 +36,11 @@ return {
       "hrsh7th/cmp-emoji",
       "saadparwaiz1/cmp_luasnip",
     },
-    config = function()
+    opts = function()
+      vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require("cmp")
-      cmp.setup({
+      local defaults = require("cmp.config.default")()
+      return {
         completion = {
           completeopt = "menu,menuone,noinsert",
         },
@@ -53,6 +55,10 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<S-CR>"] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
@@ -72,10 +78,11 @@ return {
         },
         experimental = {
           ghost_text = {
-            hl_group = "LspCodeLens",
+            hl_group = "CmpGhostText",
           },
         },
-      })
+        sorting = defaults.sorting,
+      }
     end,
   },
 
