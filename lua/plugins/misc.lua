@@ -4,7 +4,7 @@ return {
     -- enabled = false,
     opts = {
       mappings = {
-        toggle = "gS",
+        toggle = "J",
       },
     },
     keys = { { "J", desc = "Split/Join" } },
