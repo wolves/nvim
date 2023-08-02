@@ -71,7 +71,7 @@ vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 -- Tree
-vim.keymap.set("n", "<C-n>", "<cmd>Neotree toggle reveal<CR>")
+vim.keymap.set("n", "<C-e>", "<cmd>Neotree toggle reveal<CR>")
 
 -- Search
 local function search(backward)
