@@ -45,8 +45,16 @@ return {
     event = "BufAdd",
     opts = {
       options = {
+        always_show_bufferline = true,
+        separator_style = "thin",
+        indicator = {
+          icon = "▎", -- this should be omitted if indicator style is not 'icon'
+          style = "icon",
+        },
+        -- indicator = {
+        --   style = "underline",
+        -- },
         --diagnostics = "nvim_lsp",
-        always_show_bufferline = false,
         --diagnostics_indicator = function(_, _, diag)
         --  local icons = require("lazyvim.config.settings").icons.diagnostics
         --  local ret = (diag.error and icons.Error .. diag.error .. " " or "")
@@ -56,9 +64,10 @@ return {
         offsets = {
           {
             filetype = "neo-tree",
-            text = "Neo Tree",
-            highlight = "Directory",
-            text_align = "left",
+            text = "EXPLORER",
+            -- highlight = "Directory",
+            text_align = "center",
+            separator = true,
           },
         },
       },

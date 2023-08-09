@@ -29,7 +29,41 @@ local settings = {
       Variable = " ",
     },
   },
+  borders = {
+    --- @class BorderIcons
+    thin = {
+      top = "▔",
+      right = "▕",
+      bottom = "▁",
+      left = "▏",
+      top_left = "🭽",
+      top_right = "🭾",
+      bottom_right = "🭿",
+      bottom_left = "🭼",
+    },
+    ---@type BorderIcons
+    empty = {
+      top = " ",
+      right = " ",
+      bottom = " ",
+      left = " ",
+      top_left = " ",
+      top_right = " ",
+      bottom_right = " ",
+      bottom_left = " ",
+    },
+    ---@type BorderIcons
+    thick = {
+      top = "▄",
+      right = "█",
+      bottom = "▀",
+      left = "█",
+      top_left = "▄",
+      top_right = "▄",
+      bottom_right = "▀",
+      bottom_left = "▀",
+    },
+  },
 }
 
 return settings
-

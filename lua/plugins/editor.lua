@@ -5,32 +5,58 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = "Neotree",
+    dependencies = "mrbjarksen/neo-tree-diagnostics.nvim",
     keys = {
       {
-        "<leader>ft",
+        "<leader>e",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = require("util").get_root() })
+          require("neo-tree.command").execute({
+            toggle = true,
+            position = "left",
+            dir = require("util").get_root(),
+          })
         end,
-        desc = "NeoTree",
+        desc = "Explorer (root dir)",
+        remap = true,
+      },
+      {
+        "<leader>E",
+        function()
+          require("neo-tree.command").execute({
+            toggle = true,
+            position = "float",
+            dir = require("util").get_root(),
+          })
+        end,
+        desc = "Explorer Float (root dir)",
+        remap = true,
       },
     },
+    opts = require("config.neo-tree"),
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
+      if vim.fn.argc() == 1 then
+        local stat = vim.loop.fs_stat(vim.fn.argv(0))
+        if stat and stat.type == "directory" then
+          require("neo-tree")
+          vim.cmd([[set showtabline=0]])
+        end
+      end
     end,
-    opts = {
-      filesystem = {
-        follow_current_file = true,
-        hijack_netrw_behavior = "open_current",
-        filtered_items = {
-          visible = true,
-          hide_dotfiles = false,
-          hide_gitignored = true,
-          never_show = {
-            ".DS_Store",
-          },
-        },
-      },
-    },
+    -- opts = {
+    --   filesystem = {
+    --     follow_current_file = true,
+    --     hijack_netrw_behavior = "open_current",
+    --     filtered_items = {
+    --       visible = true,
+    --       hide_dotfiles = false,
+    --       hide_gitignored = true,
+    --       never_show = {
+    --         ".DS_Store",
+    --       },
+    --     },
+    --   },
+    -- },
   },
 
   -- search/replace in multiple files
