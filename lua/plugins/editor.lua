@@ -1,81 +1,60 @@
 local util = require("util")
 
 return {
+  -- window-picker
+  {
+    -- only needed if you want to use the commands with "_with_window_picker" suffix
+    "s1n7ax/nvim-window-picker",
+    event = "VeryLazy",
+    version = "2.*",
+    opts = {
+      show_prompt = false,
+      filter_rules = {
+        autoselect_one = true,
+        include_current_win = false,
+        -- filter using buffer options
+        bo = {
+          -- if the file type is one of following, the window will be ignored
+          filetype = { "neo-tree", "neo-tree-popup", "notify" },
+          -- if the buffer type is one of following, the window will be ignored
+          buftype = { "terminal", "quickfix" },
+        },
+      },
+      highlights = {
+        statusline = {
+          focused = {
+            fg = "#1F1F28",
+            bg = "#C34043",
+            bold = true,
+          },
+          unfocused = {
+            fg = "#1F1F28",
+            bg = "#98BB6C",
+            bold = true,
+          },
+        },
+        winbar = {
+          focused = {
+            fg = "#1F1F28",
+            bg = "#C34043",
+            bold = true,
+          },
+          unfocused = {
+            fg = "#1F1F28",
+            bg = "#98BB6C",
+            bold = true,
+          },
+        },
+      },
+    },
+  },
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
-    requires = {
-      {
-        -- only needed if you want to use the commands with "_with_window_picker" suffix
-        "s1n7ax/nvim-window-picker",
-        tag = "v1.*",
-        config = function()
-          require("window-picker").setup({
-            show_prompt = false,
-            filter_rules = {
-              autoselect_one = true,
-              include_current_win = false,
-              -- filter using buffer options
-              bo = {
-                -- if the file type is one of following, the window will be ignored
-                filetype = { "neo-tree", "neo-tree-popup", "notify" },
-                -- if the buffer type is one of following, the window will be ignored
-                buftype = { "terminal", "quickfix" },
-              },
-            },
-            -- You can pass in the highlight name or a table of content to set as
-            -- highlight
-            highlights = {
-              statusline = {
-                focused = {
-                  fg = "#DCD7BA",
-                  bg = "#C34043",
-                  -- fg = "#ededed",
-                  -- bg = "#e35e4f",
-                  bold = true,
-                },
-                unfocused = {
-                  fg = "#DCD7BA",
-                  bg = "#98BB6C",
-                  -- fg = "#ededed",
-                  -- bg = '#44cc41',
-                  bold = true,
-                },
-              },
-              winbar = {
-                focused = {
-                  fg = "#DCD7BA",
-                  bg = "#C34043",
-                  -- fg = "#ededed",
-                  -- bg = "#e35e4f",
-                  bold = true,
-                },
-                unfocused = {
-                  fg = "#DCD7BA",
-                  bg = "#98BB6C",
-                  -- fg = "#ededed",
-                  -- bg = '#44cc41',
-                  bold = true,
-                },
-              },
-            },
-            -- other_win_hl_color = "#e35e4f",
-          })
-        end,
-      },
-    },
     cmd = "Neotree",
     dependencies = {
       "mrbjarksen/neo-tree-diagnostics.nvim",
-      {
-        "s1n7ax/nvim-window-picker",
-        name = "window-picker",
-        event = "VeryLazy",
-        version = "2.*",
-        config = function()
-          require("window-picker").setup()
-        end,
-      },
+      "s1n7ax/nvim-window-picker",
     },
     keys = {
       {
