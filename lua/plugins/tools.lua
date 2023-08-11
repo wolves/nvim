@@ -3,23 +3,6 @@ return {
   -- Github Issue/PR Reviews in-editor
   { "pwntester/octo.nvim", opts = {}, cmd = "Octo" },
 
-  -- neorg
-  {
-    "nvim-neorg/neorg",
-    enable = false,
-    ft = "norg",
-    opts = {
-      load = {
-        ["core.defaults"] = {},
-        ["core.norg.concealer"] = {},
-        ["core.norg.completion"] = {
-          config = { engine = "nvim-cmp" },
-        },
-        ["core.integrations.nvim-cmp"] = {},
-      },
-    },
-  },
-
   -- markdown preview
   -- {
   --   "toppair/peek.nvim",
