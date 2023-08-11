@@ -11,19 +11,55 @@ return {
         tag = "v1.*",
         config = function()
           require("window-picker").setup({
-            autoselect_one = true,
-            include_current = false,
+            show_prompt = false,
             filter_rules = {
+              autoselect_one = true,
+              include_current_win = false,
               -- filter using buffer options
               bo = {
                 -- if the file type is one of following, the window will be ignored
                 filetype = { "neo-tree", "neo-tree-popup", "notify" },
-
                 -- if the buffer type is one of following, the window will be ignored
                 buftype = { "terminal", "quickfix" },
               },
             },
-            other_win_hl_color = "#e35e4f",
+            -- You can pass in the highlight name or a table of content to set as
+            -- highlight
+            highlights = {
+              statusline = {
+                focused = {
+                  fg = "#DCD7BA",
+                  bg = "#C34043",
+                  -- fg = "#ededed",
+                  -- bg = "#e35e4f",
+                  bold = true,
+                },
+                unfocused = {
+                  fg = "#DCD7BA",
+                  bg = "#98BB6C",
+                  -- fg = "#ededed",
+                  -- bg = '#44cc41',
+                  bold = true,
+                },
+              },
+              winbar = {
+                focused = {
+                  fg = "#DCD7BA",
+                  bg = "#C34043",
+                  -- fg = "#ededed",
+                  -- bg = "#e35e4f",
+                  bold = true,
+                },
+                unfocused = {
+                  fg = "#DCD7BA",
+                  bg = "#98BB6C",
+                  -- fg = "#ededed",
+                  -- bg = '#44cc41',
+                  bold = true,
+                },
+              },
+            },
+            -- other_win_hl_color = "#e35e4f",
           })
         end,
       },
