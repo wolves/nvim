@@ -119,7 +119,7 @@ local leader = {
   },
   t = {
     name = "+toggle",
-    --f = { require("plugins.lsp.formatting").toggle, "Format on Save" },
+    f = { require("plugins.lsp.format").toggle, "Format on Save" },
     n = {
       function()
         util.toggle("relativenumber", true)

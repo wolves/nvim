@@ -1,11 +1,16 @@
 local Util = require("util")
 local M = {}
 
-M.autoformat = true
+-- M.autoformat = true
+
+---@type PluginLspOpts
+M.opts = nil
+
+function M.enabled()
+  return M.opts.autoformat
+end
 
 function M.toggle()
-  -- M.autoformat = not M.autoformat
-  -- vim.notify(M.autoformat and "Enabled format on save" or "Disabled format on save")
   if vim.b.autoformat == false then
     vim.b.autoformat = nil
     M.opts.autoformat = true
@@ -48,5 +53,19 @@ function M.on_attach(client, buf)
     })
   end
 end
+
+---@param opts PluginLspOpts
+function M.setup(opts)
+  M.opts = opts
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = vim.api.nvim_create_augroup("LazyVimFormat", {}),
+    callback = function()
+      if M.opts.autoformat then
+        M.format()
+      end
+    end,
+  })
+end
+
 
 return M
