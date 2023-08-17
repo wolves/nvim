@@ -24,11 +24,18 @@ return {
       diagnostics = {
         underline = true,
         update_in_insert = false,
-        virtual_text = { spacing = 4, prefix = "●" },
+        virtual_text = {
+          spacing = 4,
+          source = "if_many",
+          prefix = "●",
+        },
         severity_sort = true,
       },
       -- Automatically format on save
       autoformat = true,
+      -- Enable this to show formatters used in a notification
+      -- Useful for debugging formatter issues
+      format_notify = true,
       -- options for vim.lsp.buf.format
       -- `bufnr` and `filter` is handled by the LazyVim formatter,
       -- but can be also overriden when specified
@@ -52,7 +59,6 @@ return {
     config = function(_, opts)
       -- autoformat
       require("plugins.lsp.format").setup(opts)
-      -- require("plugins.lsp.format").autoformat = opts.autoformat
       -- setup formatting and keymaps
       require("util").on_attach(function(client, buffer)
         -- require("plugins.lsp.format").on_attach(client, buffer)
