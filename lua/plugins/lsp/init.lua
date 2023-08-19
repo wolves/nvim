@@ -35,7 +35,7 @@ return {
       autoformat = true,
       -- Enable this to show formatters used in a notification
       -- Useful for debugging formatter issues
-      format_notify = true,
+      format_notify = false,
       -- options for vim.lsp.buf.format
       -- `bufnr` and `filter` is handled by the LazyVim formatter,
       -- but can be also overriden when specified
