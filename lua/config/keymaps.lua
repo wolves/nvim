@@ -38,6 +38,9 @@ vim.o.timeoutlen = 300
 --  },
 --})
 
+-- Atempting fixing <C-c> -> <esc> remapping error
+vim.keymap.set("i", "<C-c>", "<C-c>")
+
 -- Move to window using the <ctrl> movement keys
 vim.keymap.set("n", "<left>", "<C-w>h")
 vim.keymap.set("n", "<down>", "<C-w>j")
@@ -58,7 +61,6 @@ vim.keymap.set("n", "<A-k>", ":m .-2<CR>==")
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv")
 vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi")
 
--- Switch buffers with tab
 vim.keymap.set("n", "<C-Left>", "<cmd>bprevious<CR>")
 vim.keymap.set("n", "<C-Right>", "<cmd>bnext<CR>")
 vim.keymap.set("n", "<S-h>", "<cmd>bprevious<CR>")
