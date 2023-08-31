@@ -39,7 +39,7 @@ vim.o.timeoutlen = 300
 --})
 
 -- Atempting fixing <C-c> -> <esc> remapping error
-vim.keymap.set("i", "<C-c>", "<C-c>")
+-- vim.keymap.set("i", "<C-c>", "<C-c>")
 
 -- Move to window using the <ctrl> movement keys
 vim.keymap.set("n", "<left>", "<C-w>h")
