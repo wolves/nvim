@@ -172,12 +172,28 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPre",
     opts = {
-      -- char = "▏",
-      char = "│",
-      filetype_exclude = { "help", "dashboard", "neo-tree", "Trouble", "lazy", "neogitstatus" },
-      show_trailing_blankline_indent = false,
-      show_current_context = false,
+      indent = {
+        char = "│",
+        tab_char = "│",
+      },
+      scope = { enabled = false },
+      exclude = {
+        filetypes = {
+          "help",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "lazy",
+          "neogitstatus",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+      },
+      -- show_trailing_blankline_indent = false,
     },
+    main = "ibl",
   },
 
   -- active indent guide and indent text objects
