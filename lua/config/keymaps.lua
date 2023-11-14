@@ -119,6 +119,9 @@ local leader = {
     d = { "<cmd>DiffviewOpen<CR>", "Diffview" },
     h = { name = "+hunk" },
   },
+  m = {
+    name = "+harpoon",
+  },
   t = {
     name = "+toggle",
     f = { require("plugins.lsp.format").toggle, "Format on Save" },
