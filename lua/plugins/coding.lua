@@ -155,17 +155,30 @@ return {
   },
 
   -- comments
-  { "JoosepAlviste/nvim-ts-context-commentstring" },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    config = function()
+      require("ts_context_commentstring").setup({
+        enable_autocmd = false,
+      })
+    end,
+  },
+
   {
     "echasnovski/mini.comment",
     event = "VeryLazy",
     config = function()
       require("mini.comment").setup({
-        hooks = {
-          pre = function()
-            require("ts_context_commentstring.internal").update_commentstring({})
+        options = {
+          custom_commentstring = function()
+            return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
           end,
         },
+        -- hooks = {
+        --   pre = function()
+        --     require("ts_context_commentstring.internal").update_commentstring({})
+        --   end,
+        -- },
       })
     end,
   },

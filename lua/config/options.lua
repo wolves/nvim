@@ -40,6 +40,7 @@ end
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.ruby_host_prog = "/home/wlvs/.asdf/shims/ruby"
+vim.g.skip_ts_context_commentstring_module = true
 
 -- Set neovim npm location when using pnpm global via asdf-vm
 -- if vim.fn.has("mac") then
