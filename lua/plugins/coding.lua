@@ -33,7 +33,6 @@ return {
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
-      { "hrsh7th/cmp-emoji" },
       { "saadparwaiz1/cmp_luasnip" },
       { "abecodes/tabout.nvim", opts = { ignore_beginning = false, completion = false } },
     },
@@ -67,7 +66,7 @@ return {
 
       return {
         completion = {
-          completeopt = "menu,menuone,noinsert",
+          completeopt = "menu,menuone,noselect",
         },
         snippet = {
           expand = function(args)
@@ -93,9 +92,8 @@ return {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "luasnip" },
-          { name = "buffer" },
           { name = "path" },
-          { name = "emoji" },
+          { name = "buffer" },
         }),
         formatting = {
           format = function(_, item)
