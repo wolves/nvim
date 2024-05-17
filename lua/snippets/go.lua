@@ -10,4 +10,5 @@ local fmta = require("luasnip.extras.fmt").fmta
 
 ls.add_snippets("go", {
   s("ie", fmta("if err != nil {\n\t<>\n}<>", { i(1), i(0) })),
+  s("wr", fmt("w http.ResponseWriter, r *http.Request", {})),
 })
