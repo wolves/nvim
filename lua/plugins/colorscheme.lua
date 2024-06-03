@@ -14,11 +14,6 @@ local config = function()
     dimInactive = true,
     globalStatus = true,
     colors = {},
-    overrides = function(colors)
-      return {
-        CursorLine = { bg = colors.palette.winterBlue },
-      }
-    end,
     theme = "wave",
     background = {
       dark = "wave",
