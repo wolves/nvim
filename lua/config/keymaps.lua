@@ -124,6 +124,7 @@ local leader = {
   },
   t = {
     name = "+toggle",
+    c = { util.toggle_colors, "Colorscheme Light/Dark" },
     f = { require("plugins.lsp.format").toggle, "Format on Save" },
     n = {
       function()

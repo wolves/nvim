@@ -381,4 +381,15 @@ function M.telescope(builtin, opts)
   end
 end
 
+function M.toggle_colors()
+  local Util = require("util")
+  if vim.o.background == "dark" then
+    Util.info("Activating light mode", { title = "Colorscheme" })
+    vim.o.background = "light"
+  else
+    Util.info("Activating dark mode", { title = "Colorscheme" })
+    vim.o.background = "dark"
+  end
+end
+
 return M
