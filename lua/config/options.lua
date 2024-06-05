@@ -83,6 +83,7 @@ vim.opt.smartcase = true
 vim.opt.smartindent = true
 
 vim.opt.winbar = "%=%m %f"
+vim.opt.laststatus = 3
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true

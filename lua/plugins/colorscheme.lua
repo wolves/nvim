@@ -14,6 +14,11 @@ local config = function()
     dimInactive = true,
     globalStatus = true,
     colors = {},
+    overrides = function(colors)
+      return {
+        WinSeparator = { fg = colors.palette.oniViolet },
+      }
+    end,
     theme = "wave",
     background = {
       dark = "wave",
@@ -21,6 +26,7 @@ local config = function()
     },
   })
   vim.cmd("colorscheme kanagawa-wave")
+  vim.cmd("hi WinSeparator guibg=None")
 end
 
 return {
