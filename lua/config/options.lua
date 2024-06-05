@@ -82,6 +82,8 @@ vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
 vim.opt.smartindent = true
 
+vim.opt.winbar = "%=%m %f"
+
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.tabstop = indent
