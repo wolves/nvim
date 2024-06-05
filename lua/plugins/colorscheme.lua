@@ -25,8 +25,8 @@ local config = function()
       light = "lotus",
     },
   })
-  vim.cmd("colorscheme kanagawa-wave")
-  vim.cmd("hi WinSeparator guibg=None")
+  vim.cmd.colorscheme("kanagawa-wave")
+  vim.cmd.highlight({ "WinSeparator", "guibg=None" })
 end
 
 return {
