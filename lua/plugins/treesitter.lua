@@ -125,4 +125,11 @@ return {
     "vrischmann/tree-sitter-templ",
     ft = "templ",
   },
+
+  {
+    "IndianBoy42/tree-sitter-just",
+    config = function()
+      require("tree-sitter-just").setup({})
+    end,
+  },
 }
