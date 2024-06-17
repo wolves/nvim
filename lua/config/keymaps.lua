@@ -73,7 +73,8 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 -- vim.keymap.set("n", "<C-k>", "<C-w>k")
 
 -- Tree
-vim.keymap.set("n", "<C-e>", "<cmd>Neotree toggle reveal<CR>")
+-- vim.keymap.set("n", "<C-e>", "<cmd>Neotree toggle reveal<CR>")
+vim.keymap.set("n", "<C-e>", "<cmd>lua require('mini.files').open()<CR>")
 
 -- Search
 local function search(backward)
@@ -109,6 +110,7 @@ local leader = {
       "Buffers",
     },
   },
+  e = { "<cmd>lua require('mini.files').open()<CR>", "File Explorer" },
   f = {
     name = "+file",
     n = { "<cmd>enew<CR>", "New" },
