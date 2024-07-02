@@ -414,7 +414,7 @@ return {
       disable_commit_confirmation = true,
       kind = "floating",
       commit_editor = {
-        kind = "floating",
+        kind = "tab",
       },
       popup = {
         kind = "floating",
