@@ -100,60 +100,57 @@ vim.keymap.set("", "<esc>", ":noh<esc>")
 vim.keymap.set("n", "gw", "*N")
 vim.keymap.set("x", "gw", "*N")
 
-local leader = {
-  w = { "<cmd>w!<CR>", "Save" },
-  q = { "<cmd>q!<CR>", "Quit" },
-  b = {
-    name = "+buffer",
-    b = {
-      "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-      "Buffers",
-    },
+wk.add({
+  { "<leader>b", group = "buffer" },
+  {
+    "<leader>bb",
+    "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+    desc = "Buffers",
   },
-  e = { "<cmd>lua require('mini.files').open()<CR>", "File Explorer" },
-  f = {
-    name = "+file",
-    n = { "<cmd>enew<CR>", "New" },
+  { "<leader>e", "<cmd>lua require('mini.files').open()<CR>", desc = "File Explorer" },
+  { "<leader>f", group = "file" },
+  { "<leader>fn", "<cmd>enew<CR>", desc = "New" },
+  { "<leader>g", group = "git" },
+  { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diffview" },
+  { "<leader>gg", "<cmd>Neogit<CR>", desc = "Neogit" },
+  { "<leader>gh", group = "hunk" },
+  { "<leader>m", group = "harpoon" },
+  { "<leader>q", "<cmd>q!<CR>", desc = "Quit" },
+  { "<leader>t", group = "toggle" },
+  { "<leader>tc", util.toggle_colors, desc = "Colorscheme Light/Dark" },
+  { "<leader>tf", require("plugins.lsp.format").toggle, desc = "Format on Save" },
+  {
+    "<leader>tn",
+    function()
+      util.toggle("relativenumber", true)
+      util.toggle("number")
+    end,
+    desc = "Line Numbers",
   },
-  g = {
-    name = "+git",
-    g = { "<cmd>Neogit<CR>", "Neogit" },
-    d = { "<cmd>DiffviewOpen<CR>", "Diffview" },
-    h = { name = "+hunk" },
+  {
+    "<leader>ts",
+    function()
+      util.toggle("spell")
+    end,
+    desc = "Spelling",
   },
-  m = {
-    name = "+harpoon",
+  {
+    "<leader>tw",
+    function()
+      util.toggle("wrap")
+    end,
+    desc = "Word Wrap",
   },
-  t = {
-    name = "+toggle",
-    c = { util.toggle_colors, "Colorscheme Light/Dark" },
-    f = { require("plugins.lsp.format").toggle, "Format on Save" },
-    n = {
-      function()
-        util.toggle("relativenumber", true)
-        util.toggle("number")
-      end,
-      "Line Numbers",
-    },
-    s = {
-      function()
-        util.toggle("spell")
-      end,
-      "Spelling",
-    },
-    w = {
-      function()
-        util.toggle("wrap")
-      end,
-      "Word Wrap",
-    },
-  },
-}
+  { "<leader>w", "<cmd>w!<CR>", desc = "Save" },
+})
 
+-- Ignore <leader> with numerals
+local ignores = {}
 for i = 0, 10 do
-  leader[tostring(i)] = "which_key_ignore"
+  table.insert(ignores, { "<leader>" .. tostring(i), hidden = true })
 end
+wk.add(ignores)
 
-wk.register(leader, { prefix = "<leader>" })
-
-wk.register({ g = { name = "+goto" } })
+wk.add({
+  { "g", group = "goto" },
+})

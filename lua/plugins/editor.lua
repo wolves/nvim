@@ -316,27 +316,30 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
+    dependencies = { "echasnovski/mini.icons" },
     config = function()
       local wk = require("which-key")
       wk.setup({
         show_help = false,
         plugins = { spelling = true },
-        key_labels = { ["<leader>"] = "SPC" },
+        -- key_labels = { ["<leader>"] = "SPC" },
       })
-      wk.register({
-        mode = { "n", "v" },
-        ["g"] = { name = "+goto" },
-        ["]"] = { name = "+next" },
-        ["["] = { name = "+prev" },
-        ["<leader>b"] = { name = "+buffer" },
-        ["<leader>c"] = { name = "+code" },
-        ["<leader>f"] = { name = "+file" },
-        ["<leader>g"] = { name = "+git" },
-        ["<leader>h"] = { name = "+help" },
-        ["<leader>n"] = { name = "+noice" },
-        ["<leader>q"] = { name = "+quit/session" },
-        ["<leader>s"] = { name = "+search" },
-        ["<leader>x"] = { name = "+diagnostics/quickfix" },
+      wk.add({
+        {
+          mode = { "n", "v" },
+          { "<leader>b", group = "buffer" },
+          { "<leader>c", group = "code" },
+          { "<leader>f", group = "file" },
+          { "<leader>g", group = "git" },
+          { "<leader>h", group = "help" },
+          { "<leader>n", group = "noice" },
+          { "<leader>q", group = "quit/session" },
+          { "<leader>s", group = "search" },
+          { "<leader>x", group = "diagnostics/quickfix" },
+          { "[", group = "prev" },
+          { "]", group = "next" },
+          { "g", group = "goto" },
+        },
       })
     end,
   },
@@ -350,6 +353,7 @@ return {
 
       esc.setup({
         timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+        default_mappings = true,
         mappings = {
           i = {
             j = {
@@ -358,7 +362,7 @@ return {
             },
           },
         },
-        keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
+        -- keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
       })
     end,
   },
