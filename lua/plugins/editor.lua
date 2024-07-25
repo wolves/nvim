@@ -539,7 +539,8 @@ return {
       use_diagnostic_signs = true, -- en
     },
     keys = {
-      { "<leader>xx", "<cmd>TroubleToggle workspace_diagnostics<CR>", desc = "Trouble" },
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
+      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Buffer Diagnostics (Trouble)" },
     },
   },
 
@@ -553,9 +554,9 @@ return {
     keys = {
       { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
       { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-      { "<leader>xt", "<cmd>TodoTrouble<cr>", "Todo Trouble" },
+      { "<leader>xt", "<cmd>TodoTrouble<CR>", desc = "Todo Trouble" },
+      { "<leader>xT", "<cmd>TodoTelescope<CR>", desc = "Todo Telescope" },
       { "<leader>xtt", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo Trouble" },
-      { "<leader>xT", "<cmd>TodoTelescope<cr>", desc = "Todo Telescope" },
     },
   },
 }
