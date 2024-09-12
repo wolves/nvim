@@ -373,20 +373,43 @@ return {
     event = "BufReadPost",
     keys = { "<C-u>", "<C-d>", "gg", "G" },
     config = function()
-      require("neoscroll").setup({})
-      local map = {}
+      neoscroll = require("neoscroll")
+      neoscroll.setup({})
+      local keymap = {}
 
-      map["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "80" } }
-      map["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "80" } }
-      map["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "250" } }
-      map["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "250" } }
-      map["<C-y>"] = { "scroll", { "-0.10", "false", "80" } }
-      map["<C-e>"] = { "scroll", { "0.10", "false", "80" } }
-      map["zt"] = { "zt", { "150" } }
-      map["zz"] = { "zz", { "150" } }
-      map["zb"] = { "zb", { "150" } }
+      keymap["<C-u>"] = function()
+        neoscroll.ctrl_u({ duration = 80 })
+      end
+      keymap["<C-d>"] = function()
+        neoscroll.ctrl_d({ duration = 80 })
+      end
+      keymap["<C-b>"] = function()
+        neoscroll.ctrl_b({ duration = 250 })
+      end
+      keymap["<C-f>"] = function()
+        neoscroll.ctrl_f({ duration = 250 })
+      end
+      keymap["<C-y>"] = function()
+        neoscroll.scroll(-0.1, { move_cursor = false, duration = 80 })
+      end
+      keymap["<C-e>"] = function()
+        neoscroll.scroll(0.1, { move_cursor = false, duration = 80 })
+      end
+      keymap["zt"] = function()
+        neoscroll.zt({ half_win_duration = 150 })
+      end
+      keymap["zz"] = function()
+        neoscroll.zz({ half_win_duration = 150 })
+      end
+      keymap["zb"] = function()
+        neoscroll.zb({ half_win_duration = 150 })
+      end
 
-      require("neoscroll.config").set_mappings(map)
+      local modes = { "n", "v", "x" }
+      for key, func in pairs(keymap) do
+        vim.keymap.set(modes, key, func)
+      end
+      -- require("neoscroll.config").set_mappings(map)
     end,
   },
 
