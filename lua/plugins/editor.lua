@@ -81,7 +81,8 @@ return {
         function()
           require("neo-tree.command").execute({
             toggle = true,
-            position = "float",
+            -- position = "float",
+            position = "left",
             dir = require("util").get_root(),
           })
         end,
