@@ -27,7 +27,7 @@ function M.on_attach(client, buffer)
   self:map("<leader>cf", format, { desc = "Format Range", mode = "v", has = "documentRangeFormatting" })
   self:map("<leader>cr", M.rename, { expr = true, desc = "Rename", has = "rename" })
 
-  if client.name == "tsserver" and pcall(require, "typescript") then
+  if client.name == "ts_ls" and pcall(require, "typescript") then
     self:map("<leader>co", "TypescriptOrganizeImports", { desc = "Organize Imports" })
     self:map("<leader>cR", "TypescriptRenameFile", { desc = "Rename File" })
   end
