@@ -11,12 +11,6 @@ return {
       { "folke/neodev.nvim", config = true },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      {
-        "hrsh7th/cmp-nvim-lsp",
-        cond = function()
-          return require("util").has("nvim-cmp")
-        end,
-      },
     },
     -- ---@type lspconfig.options
     -- servers = nil,
@@ -79,7 +73,7 @@ return {
         "force",
         {},
         vim.lsp.protocol.make_client_capabilities(),
-        require("cmp_nvim_lsp").default_capabilities(),
+        require("blink.cmp").get_lsp_capabilities(),
         opts.capabilities or {}
       )
 
