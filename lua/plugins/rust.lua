@@ -190,6 +190,9 @@ return {
                 command = "clippy",
                 extraArgs = { "--no-deps" },
               },
+              files = {
+                excludeDirs = { "target" },
+              },
             },
           },
         }, -- rust-analyzer options
