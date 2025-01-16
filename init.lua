@@ -1,9 +1,9 @@
 ------------------------------------------------------------------------------//
---    _/          _/  _/      _/      _/    _/_/_/   
---   _/          _/  _/      _/      _/  _/          
---  _/    _/    _/  _/      _/      _/    _/_/       
---   _/  _/  _/    _/        _/  _/          _/      
---    _/  _/      _/_/_/_/    _/      _/_/_/         
+--    _/          _/  _/      _/      _/    _/_/_/
+--   _/          _/  _/      _/      _/  _/
+--  _/    _/    _/  _/      _/      _/    _/_/
+--   _/  _/  _/    _/        _/  _/          _/
+--    _/  _/      _/_/_/_/    _/      _/_/_/
 ------------------------------------------------------------------------------//
 
 local debug = require("util.debug")
@@ -20,7 +20,8 @@ require("config.options")
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
   callback = function()
-    require("util").version()
+    -- No need for nightly check atm
+    -- require("util").version()
     require("config.autocmds")
     require("config.keymaps")
   end,
