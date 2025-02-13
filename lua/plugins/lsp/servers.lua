@@ -3,7 +3,6 @@
 local servers = {
   astro = {},
   bashls = {},
-  clangd = {},
   cssls = {},
   -- denols = false,
   -- tailwindcss = {},
