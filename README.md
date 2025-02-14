@@ -1,10 +1,4 @@
-# Neovim Config
+# 💤 LazyVim
 
----
-Dotfile reference credit to the following repo's:
-
-- https://github.com/akinsho/dotfiles
-- https://github.com/ThePrimeagen/.dotfiles
-- https://github.com/folke/dot
-- https://github.com/tjdevries/config_manager
-- https://github.com/disrupted/dotfiles
+A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
+Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
