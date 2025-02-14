@@ -4,4 +4,5 @@
 
 local map = vim.keymap.set
 
-map({ "n", "v" }, "<leader>ww", "<cmd>w!<CR>", { desc = "Save", remap = true })
+map({ "n", "v" }, "<leader>w", "<cmd>w!<CR>", { desc = "Save", remap = true })
+map({ "n", "v" }, "<leader>q", "<cmd>q!<CR>", { desc = "Quit", remap = true })
