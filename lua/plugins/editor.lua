@@ -1,4 +1,27 @@
 return {
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    keys = {
+      { "<leader>e", false },
+    },
+  },
+  {
+    "echasnovski/mini.files",
+    opts = {
+      windows = {
+        preview = false,
+      },
+    },
+    keys = {
+      {
+        "<leader>e",
+        function()
+          require("mini.files").open(vim.uv.cwd(), true)
+        end,
+        desc = "Open mini.files (cwd)",
+      },
+    },
+  },
   -- colorizer
   {
     "NvChad/nvim-colorizer.lua",
