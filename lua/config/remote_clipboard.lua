@@ -1,9 +1,9 @@
 -- Clipboard for sessions whose yanks may need to reach another machine:
 -- every copy is emitted as OSC 52 (inside tmux this becomes a tmux buffer,
 -- rebroadcast to every attached client, local or SSH). Paste prefers the
--- local Wayland clipboard when one is available, so content copied in other
--- apps remains pasteable; without a display, paste is an OSC 52 query that
--- tmux (or the terminal) answers.
+-- local system clipboard when one is available -- Wayland, or pbpaste on
+-- macOS -- so content copied in other apps remains pasteable; with neither,
+-- paste is an OSC 52 query that tmux (or the terminal) answers.
 local M = {}
 
 local function proc_lines(pid, file)
@@ -53,6 +53,11 @@ function M.setup()
   local has_wayland = vim.env.WAYLAND_DISPLAY ~= nil
     and vim.fn.executable("wl-copy") == 1
     and vim.fn.executable("wl-paste") == 1
+  -- macOS terminals refuse OSC 52 reads, so a paste query hangs until it is
+  -- interrupted. pbcopy/pbpaste fill the role wl-copy/wl-paste do on Wayland.
+  -- macOS has a single clipboard, so "*" and "+" both map to it.
+  local has_pb = vim.fn.executable("pbcopy") == 1
+    and vim.fn.executable("pbpaste") == 1
 
   local function copy(register)
     local emit = osc52.copy(register)
@@ -64,6 +69,8 @@ function M.setup()
           cmd[#cmd + 1] = "--primary"
         end
         vim.fn.system(cmd, lines)
+      elseif has_pb then
+        vim.fn.system({ "pbcopy" }, lines)
       end
 
       if vim.g.omarchy_remote_clipboard_osc52 ~= false then
@@ -73,19 +80,26 @@ function M.setup()
   end
 
   local function paste(register)
-    if not has_wayland then
-      return osc52.paste(register)
-    end
+    if has_wayland then
+      return function()
+        local cmd = { "wl-paste", "--no-newline" }
+        if register == "*" then
+          cmd[#cmd + 1] = "--primary"
+        end
 
-    return function()
-      local cmd = { "wl-paste", "--no-newline" }
-      if register == "*" then
-        cmd[#cmd + 1] = "--primary"
+        local lines = vim.fn.systemlist(cmd, "", 1)
+        return vim.v.shell_error == 0 and lines or {}
       end
-
-      local lines = vim.fn.systemlist(cmd, "", 1)
-      return vim.v.shell_error == 0 and lines or {}
     end
+
+    if has_pb then
+      return function()
+        local lines = vim.fn.systemlist({ "pbpaste" }, "", 1)
+        return vim.v.shell_error == 0 and lines or {}
+      end
+    end
+
+    return osc52.paste(register)
   end
 
   vim.g.clipboard = {
